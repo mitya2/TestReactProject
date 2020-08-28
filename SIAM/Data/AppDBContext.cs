@@ -24,7 +24,7 @@ namespace SIAM.Models
         public DbSet<SalesStatus> SalesStatuses { get; set; }
 
         /// <summary>
-        /// Наполняет базу данных значениями по-умолчанию
+        /// Наполняет базу данных значениями по умолчанию
         /// </summary>
         public static void Initial(AppDBContext appDBContext)
         {
@@ -51,7 +51,6 @@ namespace SIAM.Models
                     );
                 appDBContext.SaveChanges();
             }
-
         }
     }
 }

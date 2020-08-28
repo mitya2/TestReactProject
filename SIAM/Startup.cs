@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,6 +8,7 @@ using SIAM.Models;
 using SIAM.Service;
 using SIAM.Data.Interfaces;
 using SIAM.Data.Repositories;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 namespace SIAM
 {
@@ -36,6 +32,11 @@ namespace SIAM
             services.AddTransient<ISalesOrders, SalesOrdersRepository>();
             services.AddTransient<ISalesOrderDetails, SalesOrderDetailsRepository>();
             services.AddTransient<ISalesStatuses, SalesStatusesRepository>();
+            
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "client_app/build";
+            });
 
             // настраиваем поддержку механизмов паттерна MVC
             services.AddMvc();
@@ -53,17 +54,41 @@ namespace SIAM
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 AppDBContext appDBContext = scope.ServiceProvider.GetRequiredService<AppDBContext>();
+
                 // инициалихируем БД значениями по умолчанию
                 AppDBContext.Initial(appDBContext);
             }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
+
+            /*app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+*/
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "client_app";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
+            });
+
+
 
         }
     }
