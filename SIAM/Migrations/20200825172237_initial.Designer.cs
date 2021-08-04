@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SIAM.Models;
+using TestDB.Models;
 
-namespace SIAM.Migrations
+namespace TestDB.Migrations
 {
     [DbContext(typeof(AppDBContext))]
     [Migration("20200825172237_initial")]

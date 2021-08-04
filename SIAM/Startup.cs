@@ -4,13 +4,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using SIAM.Models;
-using SIAM.Service;
-using SIAM.Data.Interfaces;
-using SIAM.Data.Repositories;
+using TestDB.Models;
+using TestDB.Service;
+using TestDB.Data.Interfaces;
+using TestDB.Data.Repositories;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
-namespace SIAM
+namespace TestDB
 {
     public class Startup
     {
@@ -35,7 +35,7 @@ namespace SIAM
             
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "client_app/build";
+                configuration.RootPath = "client-app/build";
             });
 
             // настраиваем поддержку механизмов паттерна MVC
@@ -55,9 +55,11 @@ namespace SIAM
             {
                 AppDBContext appDBContext = scope.ServiceProvider.GetRequiredService<AppDBContext>();
 
-                // инициалихируем БД значениями по умолчанию
+                // инициализируем БД значениями по умолчанию
                 AppDBContext.Initial(appDBContext);
             }
+
+            //app.UseCors();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -80,16 +82,13 @@ namespace SIAM
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "client_app";
+                spa.Options.SourcePath = "client-app";
 
                 if (env.IsDevelopment())
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
-
-
-
         }
     }
 }

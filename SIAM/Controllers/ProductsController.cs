@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SIAM.Data.Interfaces;
-using SIAM.Data.Models;
+using TestDB.Data.Interfaces;
+using TestDB.Data.Models;
 
-namespace SIAM.Controllers
+namespace TestDB.Controllers
 {
     [Route("api")]
     [ApiController]

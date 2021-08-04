@@ -1,6 +1,6 @@
-﻿using SIAM.Models;
+﻿using TestDB.Models;
 
-namespace SIAM.Data.Repositories
+namespace TestDB.Data.Repositories
 {
     /// <summary>
     /// Базовый класс репозитория
@@ -15,6 +15,5 @@ namespace SIAM.Data.Repositories
             //внедляем зависимость контектса БД
             this.appDBContext = appDBContext;
         }
-
     }
 }

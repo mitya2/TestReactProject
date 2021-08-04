@@ -1,11 +1,11 @@
-﻿using SIAM.Data.Models;
-using SIAM.Models;
+﻿using TestDB.Data.Models;
+using TestDB.Models;
 using System.Linq;
-using SIAM.Data.Interfaces;
+using TestDB.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace SIAM.Data.Repositories
+namespace TestDB.Data.Repositories
 {
     /// <summary>
     /// Репозиторий для работы с заказом

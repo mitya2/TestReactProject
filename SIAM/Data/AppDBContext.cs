@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SIAM.Data.Models;
-using System;
-using System.Collections.Generic;
+using TestDB.Data.Models;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace SIAM.Models
+namespace TestDB.Models
 {
     /// <summary>
     /// Класс контекста БД

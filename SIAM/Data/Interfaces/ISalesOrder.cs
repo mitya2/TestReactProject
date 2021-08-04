@@ -1,8 +1,8 @@
-﻿using SIAM.Data.Models;
+﻿using TestDB.Data.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SIAM.Data.Interfaces
+namespace TestDB.Data.Interfaces
 {
     /// <summary>
     /// Интерфейс для работы с заказами

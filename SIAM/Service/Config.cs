@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SIAM.Service
+namespace TestDB.Service
 {
     /// <summary>
     /// Клас конфигурации сервиса

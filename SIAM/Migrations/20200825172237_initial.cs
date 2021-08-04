@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SIAM.Migrations
+namespace TestDB.Migrations
 {
     public partial class initial : Migration
     {
