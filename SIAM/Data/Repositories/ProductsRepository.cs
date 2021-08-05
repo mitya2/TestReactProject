@@ -1,11 +1,10 @@
-﻿using TestDB.Data.Models;
-using TestDB.Models;
+﻿using TestDB.Models;
 using System.Linq;
-using TestDB.Data.Interfaces;
+using TestDB.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace TestDB.Data.Repositories
+namespace TestDB.Repositories
 {
     /// <summary>
     /// Репозиторий для работы с продуктами 

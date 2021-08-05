@@ -6,8 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using TestDB.Models;
 using TestDB.Service;
-using TestDB.Data.Interfaces;
-using TestDB.Data.Repositories;
+using TestDB.Interfaces;
+using TestDB.Repositories;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 namespace TestDB

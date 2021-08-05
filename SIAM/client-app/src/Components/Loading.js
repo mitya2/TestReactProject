@@ -1,4 +1,12 @@
-import React from 'react'
-import './css/Loading.css';
+import React from "react";
+import "./css/Loading.css";
 
-export default () => <div style={{display: 'flex', justifyContent: 'center', margin: '5rem'}}><div className="lds-dual-ring"/></div>
+const Loading = () => {
+  return (
+    <div style={{ display: "flex", justifyContent: "center", margin: "5rem" }}>
+      <div className="lds-dual-ring" />
+    </div>
+  );
+};
+
+export default Loading;

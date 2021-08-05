@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TestDB.Data.Models
+namespace TestDB.Models
 {
     /// <summary>
     /// Класс-модель Статус заказа

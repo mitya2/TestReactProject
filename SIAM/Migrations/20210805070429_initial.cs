@@ -11,9 +11,9 @@ namespace TestDB.Migrations
                 name: "Customers",
                 columns: table => new
                 {
-                    CustomerId = table.Column<int>(nullable: false)
+                    CustomerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 2000, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -24,10 +24,11 @@ namespace TestDB.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    ProductId = table.Column<int>(nullable: false)
+                    ProductId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 200, nullable: false),
-                    Comment = table.Column<string>(maxLength: 2000, nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -38,9 +39,9 @@ namespace TestDB.Migrations
                 name: "SalesStatuses",
                 columns: table => new
                 {
-                    SalesStatusId = table.Column<int>(nullable: false)
+                    SalesStatusId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 50, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,12 +52,12 @@ namespace TestDB.Migrations
                 name: "SalesOrders",
                 columns: table => new
                 {
-                    SalesOrderId = table.Column<int>(nullable: false)
+                    SalesOrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderDate = table.Column<DateTime>(nullable: false),
-                    SalesStatusId = table.Column<int>(nullable: false),
-                    CustomerId = table.Column<int>(nullable: false),
-                    Comment = table.Column<string>(maxLength: 2000, nullable: true)
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SalesStatusId = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,12 +80,13 @@ namespace TestDB.Migrations
                 name: "SalesOrderDetails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SalesOrderId = table.Column<int>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false),
-                    OrderQuantity = table.Column<int>(nullable: false),
-                    ModifyDate = table.Column<DateTime>(nullable: false)
+                    SalesOrderId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    OrderQuantity = table.Column<int>(type: "int", nullable: false),
+                    UnitPrice = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    ModifyDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

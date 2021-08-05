@@ -1,6 +1,6 @@
 ﻿using TestDB.Models;
 
-namespace TestDB.Data.Repositories
+namespace TestDB.Repositories
 {
     /// <summary>
     /// Базовый класс репозитория

@@ -15,11 +15,11 @@ namespace TestDB.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("SIAM.Data.Models.Customer", b =>
+            modelBuilder.Entity("TestDB.Models.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
@@ -28,15 +28,15 @@ namespace TestDB.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(2000)")
-                        .HasMaxLength(2000);
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("SIAM.Data.Models.Product", b =>
+            modelBuilder.Entity("TestDB.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -44,20 +44,24 @@ namespace TestDB.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(2000)")
-                        .HasMaxLength(2000);
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ProductId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("SIAM.Data.Models.SalesOrder", b =>
+            modelBuilder.Entity("TestDB.Models.SalesOrder", b =>
                 {
                     b.Property<int>("SalesOrderId")
                         .ValueGeneratedOnAdd()
@@ -65,8 +69,8 @@ namespace TestDB.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(2000)")
-                        .HasMaxLength(2000);
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -86,7 +90,7 @@ namespace TestDB.Migrations
                     b.ToTable("SalesOrders");
                 });
 
-            modelBuilder.Entity("SIAM.Data.Models.SalesOrderDetail", b =>
+            modelBuilder.Entity("TestDB.Models.SalesOrderDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -105,6 +109,10 @@ namespace TestDB.Migrations
                     b.Property<int>("SalesOrderId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("UnitPrice")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
@@ -114,7 +122,7 @@ namespace TestDB.Migrations
                     b.ToTable("SalesOrderDetails");
                 });
 
-            modelBuilder.Entity("SIAM.Data.Models.SalesStatus", b =>
+            modelBuilder.Entity("TestDB.Models.SalesStatus", b =>
                 {
                     b.Property<int>("SalesStatusId")
                         .ValueGeneratedOnAdd()
@@ -123,42 +131,53 @@ namespace TestDB.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("SalesStatusId");
 
                     b.ToTable("SalesStatuses");
                 });
 
-            modelBuilder.Entity("SIAM.Data.Models.SalesOrder", b =>
+            modelBuilder.Entity("TestDB.Models.SalesOrder", b =>
                 {
-                    b.HasOne("SIAM.Data.Models.Customer", "Customer")
+                    b.HasOne("TestDB.Models.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SIAM.Data.Models.SalesStatus", "SalesStatus")
+                    b.HasOne("TestDB.Models.SalesStatus", "SalesStatus")
                         .WithMany()
                         .HasForeignKey("SalesStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("SalesStatus");
                 });
 
-            modelBuilder.Entity("SIAM.Data.Models.SalesOrderDetail", b =>
+            modelBuilder.Entity("TestDB.Models.SalesOrderDetail", b =>
                 {
-                    b.HasOne("SIAM.Data.Models.Product", "Product")
+                    b.HasOne("TestDB.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SIAM.Data.Models.SalesOrder", null)
+                    b.HasOne("TestDB.Models.SalesOrder", null)
                         .WithMany("SalesOrderDetails")
                         .HasForeignKey("SalesOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("TestDB.Models.SalesOrder", b =>
+                {
+                    b.Navigation("SalesOrderDetails");
                 });
 #pragma warning restore 612, 618
         }

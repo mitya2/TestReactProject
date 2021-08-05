@@ -1,7 +1,7 @@
-﻿using TestDB.Data.Models;
+﻿using TestDB.Models;
 using System.Threading.Tasks;
 
-namespace TestDB.Data.Interfaces
+namespace TestDB.Interfaces
 {
     /// <summary>
     /// Интерфейс для работы с клиентами

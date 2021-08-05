@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace TestDB.Data.Models
+namespace TestDB.Models
 {
     /// <summary>
     /// Класс-модель Заказ

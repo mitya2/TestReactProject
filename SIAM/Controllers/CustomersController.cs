@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TestDB.Data.Interfaces;
-using TestDB.Data.Models;
+using TestDB.Interfaces;
+using TestDB.Models;
 
 namespace TestDB.Controllers
 {

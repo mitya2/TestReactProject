@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import Loading from "./Components/Loading";
+import React, {useState,  useEffect } from "react";
+import Loading from "../Components/Loading";
 
 export default function SalesOrders() {
-  const [sales_orders, setSalesOrders] = React.useState([]);
-  const [isLoading, setLoading] = React.useState(true);
+  const [sales_orders, setSalesOrders] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/sales_orders")
       .then((response) => response.json())
-      .then((orders) => {
+      .then((sales_orders) => {
         setTimeout(() => {
           setSalesOrders(sales_orders);
           setLoading(false);
@@ -16,11 +16,9 @@ export default function SalesOrders() {
       });
   }, []);
 
-  console.log(sales_orders);
-
   return (
-    <div>
-      <h1>Page Sales Orders</h1>
+    <div className="m-2">
+      <h4>Список заказов</h4>
       <ul>
         {isLoading && <Loading />}
         {sales_orders.map((item) => (

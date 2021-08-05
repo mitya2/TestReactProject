@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace TestDB.Data.Models
+namespace TestDB.Models
 {
     /// <summary>
     /// Класс-модель Позиция заказа 
@@ -25,7 +25,7 @@ namespace TestDB.Data.Models
 
         [Display(Name = "Цена по прайсу на момент формирования заказа")]
         [Required]
-        public decimal UnitPrice;
+        public decimal UnitPrice { get; set; }
 
         [Display(Name = "Дата изменения")]
         [Required]

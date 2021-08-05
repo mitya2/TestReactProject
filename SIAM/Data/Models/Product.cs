@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TestDB.Data.Models
+namespace TestDB.Models
 {
     /// <summary>
     /// Класс-модель Продукт
@@ -17,11 +17,12 @@ namespace TestDB.Data.Models
 
         [Display(Name = "Цена продукта")]
         [Required]
-        public decimal Price;
+        public decimal Price { get; set; }
+
 
         [Display(Name = "Комментарий")]
         [StringLength(2000)]
         public string Comment { get; set; }
-        
+       
     }
 }

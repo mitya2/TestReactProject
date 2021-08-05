@@ -1,8 +1,8 @@
-﻿using TestDB.Data.Models;
+﻿using TestDB.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TestDB.Data.Interfaces
+namespace TestDB.Interfaces
 {
     /// <summary>
     /// Интерфейс для работы со статусами заказов
