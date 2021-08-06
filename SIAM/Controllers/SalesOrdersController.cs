@@ -45,7 +45,7 @@ namespace TestDB.Controllers
             await _salesOrdersRep.SaveSalesOrderAsync(salesOrder);
         }
 
-        [HttpDelete("sales_orders")]
+        [HttpDelete("sales_orders/{id}")]
         public async Task DeleteSalesOrderDetail(int id)
         {
             await _salesOrdersRep.DeleteSalesOrderAsync(id);

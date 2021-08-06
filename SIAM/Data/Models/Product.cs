@@ -19,7 +19,6 @@ namespace TestDB.Models
         [Required]
         public decimal Price { get; set; }
 
-
         [Display(Name = "Комментарий")]
         [StringLength(2000)]
         public string Comment { get; set; }

@@ -25,11 +25,6 @@ namespace TestDB.Interfaces
         void SaveSalesOrder(SalesOrder salesOrder);
 
         /// <summary>
-        /// Удаляет заказ
-        /// </summary>
-        void DeleteSalesOrder(int id);
-
-        /// <summary>
         /// Возвращает все заказы (асинхронно)
         /// </summary>
         Task<IQueryable<SalesOrder>> GetSalesOrdersAsync();
@@ -44,6 +39,12 @@ namespace TestDB.Interfaces
         /// </summary>
         Task SaveSalesOrderAsync(SalesOrder salesOrder);
 
+
+        /// <summary>
+        /// Удаляет заказ
+        /// </summary>
+        void DeleteSalesOrder(int id);
+        
         /// <summary>
         /// Удаляет заказ (асинхронно)
         /// </summary>

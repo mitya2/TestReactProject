@@ -7,37 +7,47 @@ import DeleteProductButton from "../Components/DelectProductButton";
 //import Context from "../Context";
 import { useLocalStorage } from "../Hooks/useLocalStorage";
 
-
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-  //const [currentPage, setCurrentPage] = useState(1);
-  const [currentPage, setCurrentPage] = useLocalStorage(1, 'productsPageNumber');
-
-  const [itemsPerPage] = useState(10);
+  const [currentPage, setCurrentPage] = useLocalStorage(
+    1,
+    "productsPageNumber"
+  );
+  const [itemsPerPage] = useState(4);
 
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
   const currentItems = products.slice(firstItemIndex, lastItemIndex);
-  const paginate = (PageNumber) => setCurrentPage(PageNumber);
 
-  useEffect(() => {
+  const paginate = (PageNumber) => {
+    setCurrentPage(PageNumber);
+  };
+
+  const loadData = (deleted_id) => {
     fetch("/api/products")
       .then((response) => response.json())
       .then((products) => {
-        setTimeout(() => {
-          setProducts(products);
-          setLoading(false);
-        }, 500); // задержка для демонстрации отображения процесса загрузки данных
+        setProducts(products);
+        // если удалили последний элемент на странице - переходим на предыдущую
+        if (Math.ceil(products.length / itemsPerPage) < currentPage)
+          setCurrentPage(currentPage - 1);
       });
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      loadData();
+      setLoading(false);
+    }, 500); // задержка для демонстрации отображения процесса загрузки данных
   }, []);
 
   return (
     <div className="m-2">
       <h4>Список продуктов</h4>
       {isLoading && <Loading />}
-
       {!isLoading && (
         <>
           <Table className="me-auto" striped bordered hover>
@@ -90,7 +100,11 @@ const Products = () => {
                   </td>
                   <td>{item.price}</td>
                   <td>
-                    <DeleteProductButton id={item.productId} name={item.name} />
+                    <DeleteProductButton
+                      id={item.productId}
+                      name={item.name}
+                      updateData={loadData}
+                    />
                   </td>
                 </tr>
               ))}

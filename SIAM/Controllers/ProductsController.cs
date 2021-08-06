@@ -23,7 +23,7 @@ namespace TestDB.Controllers
         }
 
         [HttpGet("products")]
-        public async Task<IEnumerable<Product>> GetProducts()
+        public async Task<IQueryable<Product>> GetProducts()
         {
             return await _productsRep.GetProductsAsync();
         }
@@ -38,6 +38,18 @@ namespace TestDB.Controllers
                 return NotFound();
             }
             return product;
+        }
+
+        [HttpDelete("products/{id}")]
+        public async Task DeleteProduct(int id)
+        {
+            await _productsRep.DeleteProductAsync(id);
+        }
+
+        [HttpPost("products")]
+        public async Task UpdateProduct(Product product)
+        {
+            await _productsRep.SaveProductAsync(product);
         }
     }
 }

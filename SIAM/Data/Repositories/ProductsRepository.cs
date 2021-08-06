@@ -34,6 +34,36 @@ namespace TestDB.Repositories
         {
             return await appDBContext.Products.FirstOrDefaultAsync(p => p.ProductId == id);
         }
+
+        public void DeleteProduct(int id)
+        {
+            appDBContext.Remove(new Product { ProductId = id });
+            appDBContext.SaveChanges();
+        }
+
+        public async Task DeleteProductAsync(int id)
+        {
+            appDBContext.Remove(new Product { ProductId = id });
+            await appDBContext.SaveChangesAsync();
+        }
+
+        public void SaveProduct(Product product)
+        {
+            if (product.ProductId == default)
+                appDBContext.Entry(product).State = EntityState.Added;
+            else
+                appDBContext.Entry(product).State = EntityState.Modified;
+            appDBContext.SaveChanges();
+        }
+
+        public async Task SaveProductAsync(Product product)
+        {
+            if (product.ProductId == default)
+                appDBContext.Entry(product).State = EntityState.Added;
+            else
+                appDBContext.Entry(product).State = EntityState.Modified;
+            await appDBContext.SaveChangesAsync();
+        }
         #endregion
     }
 }

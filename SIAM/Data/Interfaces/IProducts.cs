@@ -10,14 +10,19 @@ namespace TestDB.Interfaces
     public interface IProducts
     {
         /// <summary>
-        /// Возвращает все продукты
-        /// </summary>
-        IQueryable<Product> GetProducts();
-
-        /// <summary>
         /// Возвращает продукт
         /// </summary>
         Product GetProduct(int id);
+
+        /// <summary>
+        /// Возвращает продукт (асинхронно)
+        /// </summary>
+        Task<Product> GetProductAsync(int id);
+
+        /// <summary>
+        /// Возвращает все продукты
+        /// </summary>
+        IQueryable<Product> GetProducts();
 
         /// <summary>
         /// Возвращает все продукты (асинхронно)
@@ -25,10 +30,24 @@ namespace TestDB.Interfaces
         Task<IQueryable<Product>> GetProductsAsync();
 
         /// <summary>
-        /// Возвращает продукт (асинхронно)
+        /// Изменяет или добавляет продукт
         /// </summary>
-        Task<Product> GetProductAsync(int id);
+        void SaveProduct(Product product);
+
+        /// <summary>
+        /// Изменяет или добавляет продкт (асинхронно)
+        /// </summary>
+        Task SaveProductAsync(Product product);
 
 
+        /// <summary>
+        /// Удаляет продукт
+        /// </summary>
+        void DeleteProduct(int id);
+
+        /// <summary>
+        /// Удаляет продукт (асинхронно)
+        /// </summary>
+        Task DeleteProductAsync(int id);
     }
 }

@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
-const DeleteProductButton = ({ id, name }) => {
+const DeleteProductButton = ({ id, name, updateData }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleDelete = () => {
+    fetch("/api/products/" + id, { method: "DELETE" }).then((result) => {
+      setShow(false);
+      updateData();
+    });
+  };
 
   return (
     <>
@@ -24,7 +31,7 @@ const DeleteProductButton = ({ id, name }) => {
           <Button variant="secondary" onClick={handleClose}>
             Отмена
           </Button>
-          <Button variant="danger" onClick={handleClose}>
+          <Button variant="danger" onClick={handleDelete}>
             Удалить
           </Button>
         </Modal.Footer>
