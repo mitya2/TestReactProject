@@ -4,11 +4,17 @@ import UPagination from "../Components/UPagination";
 import { Table, OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import DeleteProductButton from "../Components/DelectProductButton";
+//import Context from "../Context";
+import { useLocalStorage } from "../Hooks/useLocalStorage";
+
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+
+  //const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useLocalStorage(1, 'productsPageNumber');
+
   const [itemsPerPage] = useState(10);
 
   const lastItemIndex = currentPage * itemsPerPage;
@@ -58,14 +64,28 @@ const Products = () => {
                     >
                       {item.name}&nbsp;&nbsp;
                     </Link>
-                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">{item.comment}</Tooltip>}>
-                      { item.comment ? (
+                    <OverlayTrigger
+                      overlay={
+                        <Tooltip id="tooltip-disabled">{item.comment}</Tooltip>
+                      }
+                    >
+                      {item.comment ? (
                         <span className="d-inline-block">
-                          <Button style={{ pointerEvents: "none", borderRadius: "1em"}} disabled size="sm" variant="secondary">
-                          &nbsp;i&nbsp;  
+                          <Button
+                            style={{
+                              pointerEvents: "none",
+                              borderRadius: "1em",
+                            }}
+                            disabled
+                            size="sm"
+                            variant="secondary"
+                          >
+                            &nbsp;i&nbsp;
                           </Button>
                         </span>
-                      ) : <span></span>}
+                      ) : (
+                        <span></span>
+                      )}
                     </OverlayTrigger>
                   </td>
                   <td>{item.price}</td>
