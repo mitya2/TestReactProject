@@ -8,21 +8,26 @@ import { Pagination } from "react-bootstrap";
 const UPagination = ({ currentPage, itemsPerPage, totalItems, paginate }) => {
   const pageNumbers = []; // массив кнопок Paginator-а
 
-  // формируем массив кнопок страниц (с округлением вверх)
-  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
-    pageNumbers.push(
-      <Pagination.Item
-        onClick={() => paginate(i)}
-        key={i}
-        activeLabel=""
-        active={i === currentPage}
-      >
-        {i}
-      </Pagination.Item>
-    );
-  }
+  const pagesCount = Math.ceil(totalItems / itemsPerPage); // кол-во страниц
 
-  return <Pagination>{pageNumbers}</Pagination>;
+  if (pagesCount > 1) { 
+    // если страниц больше 1, то формируем массив кнопок страниц
+    for (let i = 1; i <= pagesCount; i++) {
+      pageNumbers.push(
+        <Pagination.Item
+          onClick={() => paginate(i)}
+          key={i}
+          activeLabel=""
+          active={i === currentPage}
+        >
+          {i}
+        </Pagination.Item>
+      );
+    }
+    return <Pagination>{pageNumbers}</Pagination>;
+  } else { 
+    return <></>;
+  }
 };
 
 export default UPagination;

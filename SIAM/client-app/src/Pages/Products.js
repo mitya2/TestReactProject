@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { Table, OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 import Loading from "../Components/Loading";
 import UPagination from "../Components/UPagination";
-import { Table, OverlayTrigger, Tooltip, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import DeleteProductButton from "../Components/DelectProductButton";
-//import Context from "../Context";
+import UpdateProductModal from "../Components/UpdateProductModal";
 import { useLocalStorage } from "../Hooks/useLocalStorage";
 
 const Products = () => {
@@ -20,6 +19,9 @@ const Products = () => {
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
   const currentItems = products.slice(firstItemIndex, lastItemIndex);
+
+  const [showUpdate, setShowUpdate] = useState(false);
+  const [curentProductID, setСurentProductID] = useState(null);
 
   const paginate = (PageNumber) => {
     setCurrentPage(PageNumber);
@@ -54,7 +56,7 @@ const Products = () => {
             <thead>
               <tr>
                 <th width="50px">Артикул</th>
-                <th>Наименование товара</th>
+                <th>Наименование продукта</th>
                 <th width="150px">Цена, руб</th>
                 <th width="40px" />
               </tr>
@@ -64,16 +66,18 @@ const Products = () => {
                 <tr key={item.productId}>
                   <td>{item.productId}</td>
                   <td>
-                    <Link
+                    <span onClick={() => {
+                      setСurentProductID(item.productId);
+                      setShowUpdate(true);
+                    }}
                       style={{
                         cursor: "pointer",
                         textDecoration: "none",
                         color: "black",
                       }}
-                      to={"/EditProduct/" + item.productId}
                     >
                       {item.name}&nbsp;&nbsp;
-                    </Link>
+                    </span>
                     <OverlayTrigger
                       overlay={
                         <Tooltip id="tooltip-disabled">{item.comment}</Tooltip>
@@ -111,11 +115,20 @@ const Products = () => {
             </tbody>
           </Table>
 
+          {currentItems.length === 0 && (<div className="text-center">Нет записей</div>)}
+         
+
           <div className="d-sm-flex justify-content-between">
             <div className="bd-highlight">
-              <Link to="/addProduct" className="btn btn-primary">
+              <Button
+                onClick={() => {
+                  setСurentProductID(null);
+                  setShowUpdate(true);
+                }}
+                variant="primary"
+              >
                 Добавить
-              </Link>
+              </Button>
             </div>
             <div className="bd-highlight">
               <UPagination
@@ -128,6 +141,12 @@ const Products = () => {
           </div>
         </>
       )}
+      <UpdateProductModal
+        show={showUpdate}
+        id={curentProductID}
+        setShowModal={setShowUpdate}
+        updateData={loadData}
+      />
     </div>
   );
 };
