@@ -23,11 +23,25 @@ const Products = () => {
   const [showUpdate, setShowUpdate] = useState(false);
   const [curentProductID, setСurentProductID] = useState(null);
 
+  const [curentProduct, SetCurentProduct] = useState([]);
+
+  const GetCurentProduct = (id) => {
+    setСurentProductID(id);
+    //const headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
+
+    fetch("/api/products/" + id, {})
+      .then((response) => response.json())
+      .then((curentProduct) => {
+        console.log(curentProduct);
+        SetCurentProduct(curentProduct);
+      });
+  };
+
   const paginate = (PageNumber) => {
     setCurrentPage(PageNumber);
   };
 
-  const loadData = (deleted_id) => {
+  const updateData = () => {
     fetch("/api/products")
       .then((response) => response.json())
       .then((products) => {
@@ -41,7 +55,7 @@ const Products = () => {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      loadData();
+      updateData();
       setLoading(false);
     }, 500); // задержка для демонстрации отображения процесса загрузки данных
   }, []);
@@ -66,10 +80,12 @@ const Products = () => {
                 <tr key={item.productId}>
                   <td>{item.productId}</td>
                   <td>
-                    <span onClick={() => {
-                      setСurentProductID(item.productId);
-                      setShowUpdate(true);
-                    }}
+                    <span
+                      onClick={() => {
+                        //setСurentProductID(item.productId);
+                        GetCurentProduct(item.productId);
+                        setShowUpdate(true);
+                      }}
                       style={{
                         cursor: "pointer",
                         textDecoration: "none",
@@ -107,7 +123,7 @@ const Products = () => {
                     <DeleteProductButton
                       id={item.productId}
                       name={item.name}
-                      updateData={loadData}
+                      updateData={updateData}
                     />
                   </td>
                 </tr>
@@ -115,29 +131,27 @@ const Products = () => {
             </tbody>
           </Table>
 
-          {currentItems.length === 0 && (<div className="text-center">Нет записей</div>)}
-         
+          {currentItems.length === 0 && (
+            <div className="text-center">Нет записей</div>
+          )}
 
           <div className="d-sm-flex justify-content-between">
-            <div className="bd-highlight">
-              <Button
-                onClick={() => {
-                  setСurentProductID(null);
-                  setShowUpdate(true);
-                }}
-                variant="primary"
-              >
-                Добавить
-              </Button>
-            </div>
-            <div className="bd-highlight">
-              <UPagination
-                currentPage={currentPage}
-                itemsPerPage={itemsPerPage}
-                totalItems={products.length}
-                paginate={paginate}
-              />
-            </div>
+            <Button
+              onClick={() => {
+                setСurentProductID(null);
+                setShowUpdate(true);
+              }}
+              variant="primary"
+            >
+              Добавить
+            </Button>
+
+            <UPagination
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPage}
+              totalItems={products.length}
+              paginate={paginate}
+            />
           </div>
         </>
       )}
@@ -145,7 +159,7 @@ const Products = () => {
         show={showUpdate}
         id={curentProductID}
         setShowModal={setShowUpdate}
-        updateData={loadData}
+        updateData={updateData}
       />
     </div>
   );

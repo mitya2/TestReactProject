@@ -24,7 +24,7 @@ const UPagination = ({ currentPage, itemsPerPage, totalItems, paginate }) => {
         </Pagination.Item>
       );
     }
-    return <Pagination>{pageNumbers}</Pagination>;
+    return <Pagination className="m-0">{pageNumbers}</Pagination>;
   } else { 
     return <></>;
   }

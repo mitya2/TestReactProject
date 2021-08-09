@@ -12,11 +12,11 @@ function useLocalStorage(initialValue, key) {
 
   const [value, setValue] = useState(getValue());
 
-  useEffect(()=>{
-      localStorage.setItem(key, JSON.stringify(value));
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
   }, [value]);
 
   return [value, setValue];
 }
 
-export {useLocalStorage};
+export { useLocalStorage };
