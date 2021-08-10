@@ -36,8 +36,7 @@ const Products = () => {
       .then((products) => {
         setProducts(products);
         // если было добавление то перемещаемся в конец списка
-        if (isAdding)
-        {
+        if (isAdding) {
           setCurrentPage(Math.ceil(products.length / itemsPerPage));
         }
         // если удалили последний элемент на странице - переходим на предыдущую
@@ -73,20 +72,16 @@ const Products = () => {
               {currentItems.map((item) => (
                 <tr key={item.productId}>
                   <td>{item.productId}</td>
-                  <td>
-                    <span
-                      onClick={() => {
-                        setCurrentProductId(item.productId);
-                        setShowUpdateModal(true);
-                      }}
-                      style={{
-                        cursor: "pointer",
-                        textDecoration: "none",
-                        color: "black",
-                      }}
-                    >
-                      {item.name}&nbsp;&nbsp;
-                    </span>
+                  <td
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setCurrentProductId(item.productId);
+                      setShowUpdateModal(true);
+                    }}
+                  >
+                    {item.name}&nbsp;&nbsp;
                     <OverlayTrigger
                       overlay={
                         <Tooltip id="tooltip-disabled">{item.comment}</Tooltip>

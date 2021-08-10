@@ -105,6 +105,64 @@ namespace TestDB.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Customers",
+                columns: new[] { "CustomerId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Иванов" },
+                    { 2, "Петров" },
+                    { 3, "Сидоров" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "ProductId", "Comment", "Name", "Price" },
+                values: new object[,]
+                {
+                    { 14, null, "Манго", 1000m },
+                    { 13, null, "Нектарин", 200m },
+                    { 12, null, "Абрикос", 250m },
+                    { 11, null, "Персик", 240m },
+                    { 10, null, "Виноград", 399m },
+                    { 8, null, "Зеленый лук", 50m },
+                    { 9, null, "Свекла", 200m },
+                    { 6, null, "Лимон", 200m },
+                    { 5, null, "Лесной орех", 1200m },
+                    { 4, "Мытая", "Морковь", 40m },
+                    { 3, null, "Банан", 55m },
+                    { 2, "Сорт Голден", "Яблоко", 100m },
+                    { 1, null, "Картофель", 50m },
+                    { 7, null, "Имбирь", 2000m }
+                });
+
+            migrationBuilder.InsertData(
+                table: "SalesStatuses",
+                columns: new[] { "SalesStatusId", "Name" },
+                values: new object[,]
+                {
+                    { 5, "Готов к отгрузке" },
+                    { 1, "Создан" },
+                    { 2, "Обрабатывается" },
+                    { 3, "Принят" },
+                    { 4, "Оплачен" },
+                    { 6, "Отгружен" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "SalesOrders",
+                columns: new[] { "SalesOrderId", "Comment", "CustomerId", "OrderDate", "SalesStatusId" },
+                values: new object[,]
+                {
+                    { 1, "", 1, new DateTime(2021, 8, 10, 16, 10, 32, 885, DateTimeKind.Local).AddTicks(4276), 1 },
+                    { 2, "Безналичная оплата", 2, new DateTime(2021, 7, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2402), 2 },
+                    { 3, "Оплата наличкой", 3, new DateTime(2021, 5, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2473), 3 },
+                    { 4, null, 1, new DateTime(2021, 6, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2478), 4 },
+                    { 5, null, 2, new DateTime(2021, 5, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2480), 5 },
+                    { 7, null, 1, new DateTime(2020, 8, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2483), 5 },
+                    { 6, "Оплата наличкой", 3, new DateTime(2021, 6, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2482), 6 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_SalesOrderDetails_ProductId",
                 table: "SalesOrderDetails",

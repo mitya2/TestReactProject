@@ -26,6 +26,7 @@ namespace TestDB
             // настраиваем контекст работы с БД
             services.AddDbContext<AppDBContext>(options => options.UseSqlServer(Config.ConnectionString));
             
+
             // устанавливаем зависимости
             services.AddTransient<IProducts, ProductsRepository>();
             services.AddTransient<ICustomers, CustomersRepository>();
@@ -50,29 +51,11 @@ namespace TestDB
                 app.UseDeveloperExceptionPage();
             }
 
-            // формируем контекст работв с БД
-            using (var scope = app.ApplicationServices.CreateScope())
-            {
-                AppDBContext appDBContext = scope.ServiceProvider.GetRequiredService<AppDBContext>();
-
-                // инициализируем БД значениями по умолчанию
-                AppDBContext.Initial(appDBContext);
-            }
-
-            //app.UseCors();
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
             app.UseRouting();
 
-
-            /*app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-*/
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

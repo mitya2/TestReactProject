@@ -13,6 +13,7 @@ const Routing = () => {
     useEffect(() => {
       //console.log(location)
       if (location.pathname !== '/products') localStorage.removeItem("productsPageNumber");
+      if (location.pathname !== '/') localStorage.removeItem("salesOrdersPageNumber");
       }, [location]);
 
     return (
