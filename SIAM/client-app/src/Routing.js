@@ -25,3 +25,5 @@ const Routing = () => {
 };
 
 export default Routing;
+
+//      <Route exact path="/products" component={Products} />

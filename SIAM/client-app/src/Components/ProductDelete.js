@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
-const DeleteProductButton = ({ id, name, updateData }) => {
+const ProductDelete = ({ id, name, updateData }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleDelete = () => {
-    fetch("/api/products/" + id, { method: "DELETE" }).then((result) => {
+    fetch("/api/products/" + id, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    }).then((result) => {
       setShow(false);
       updateData();
     });
@@ -40,4 +43,4 @@ const DeleteProductButton = ({ id, name, updateData }) => {
   );
 };
 
-export default DeleteProductButton;
+export default ProductDelete;

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Table, OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 import Loading from "../Components/Loading";
 import UPagination from "../Components/UPagination";
-import DeleteProductButton from "../Components/DelectProductButton";
-import UpdateProductModal from "../Components/UpdateProductModal";
+import ProductDelete from "../Components/ProductDelete";
+import ProductModal from "../Components/ProductModal";
 import { useLocalStorage } from "../Hooks/useLocalStorage";
 
 const Products = () => {
@@ -20,32 +20,26 @@ const Products = () => {
   const firstItemIndex = lastItemIndex - itemsPerPage;
   const currentItems = products.slice(firstItemIndex, lastItemIndex);
 
-  const [showUpdate, setShowUpdate] = useState(false);
-  const [curentProductID, setСurentProductID] = useState(null);
-
-  const [curentProduct, SetCurentProduct] = useState([]);
-
-  const GetCurentProduct = (id) => {
-    setСurentProductID(id);
-    //const headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' }
-
-    fetch("/api/products/" + id, {})
-      .then((response) => response.json())
-      .then((curentProduct) => {
-        console.log(curentProduct);
-        SetCurentProduct(curentProduct);
-      });
-  };
-
   const paginate = (PageNumber) => {
     setCurrentPage(PageNumber);
   };
 
-  const updateData = () => {
-    fetch("/api/products")
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [currentProductId, setCurrentProductId] = useState(null);
+
+  const updateData = (isAdding) => {
+    fetch("/api/products", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
       .then((response) => response.json())
       .then((products) => {
         setProducts(products);
+        // если было добавление то перемещаемся в конец списка
+        if (isAdding)
+        {
+          setCurrentPage(Math.ceil(products.length / itemsPerPage));
+        }
         // если удалили последний элемент на странице - переходим на предыдущую
         if (Math.ceil(products.length / itemsPerPage) < currentPage)
           setCurrentPage(currentPage - 1);
@@ -82,9 +76,8 @@ const Products = () => {
                   <td>
                     <span
                       onClick={() => {
-                        //setСurentProductID(item.productId);
-                        GetCurentProduct(item.productId);
-                        setShowUpdate(true);
+                        setCurrentProductId(item.productId);
+                        setShowUpdateModal(true);
                       }}
                       style={{
                         cursor: "pointer",
@@ -120,7 +113,7 @@ const Products = () => {
                   </td>
                   <td>{item.price}</td>
                   <td>
-                    <DeleteProductButton
+                    <ProductDelete
                       id={item.productId}
                       name={item.name}
                       updateData={updateData}
@@ -138,8 +131,8 @@ const Products = () => {
           <div className="d-sm-flex justify-content-between">
             <Button
               onClick={() => {
-                setСurentProductID(null);
-                setShowUpdate(true);
+                setCurrentProductId(null);
+                setShowUpdateModal(true);
               }}
               variant="primary"
             >
@@ -155,10 +148,11 @@ const Products = () => {
           </div>
         </>
       )}
-      <UpdateProductModal
-        show={showUpdate}
-        id={curentProductID}
-        setShowModal={setShowUpdate}
+
+      <ProductModal
+        show={showUpdateModal}
+        id={currentProductId}
+        setShowUpdateModal={setShowUpdateModal}
         updateData={updateData}
       />
     </div>

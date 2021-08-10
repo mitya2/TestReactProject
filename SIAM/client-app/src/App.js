@@ -1,21 +1,17 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import NaviBar from "./Components/Navibar";
+import ProjectNavbar from "./Components/ProjectNavbar";
 
-import {
-  BrowserRouter as Router
-} from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import Routing from "./Routing";
 
 function App() {
   return (
-    <>
-      <Router>
-        <NaviBar />
-        <Routing/>
-      </Router>
-    </>
+    <Router>
+      <ProjectNavbar />
+      <Routing />
+    </Router>
   );
 }
 

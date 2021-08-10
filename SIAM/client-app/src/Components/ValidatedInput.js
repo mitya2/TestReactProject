@@ -1,33 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "react-bootstrap";
-import { useInput } from "../Hooks/useInput";
+import { useValidation } from "../Hooks/useValidation";
 
 const ValidatedInput = ({
+  fieldname,
   title,
   type,
   textarea,
-  placeHolderValue,
+  placeholder,
   value,
   validations,
-  validated,
+  setValidated,
+  setUpdate,
 }) => {
-  const Input = useInput(value, validations, validated);
+  const [isDirty, setIsDirty] = useState(false);
+  const valid = useValidation(String(value), validations, setValidated);
+
+  const onChange = (e) => {
+    setUpdate(e);
+  };
+
+  const onBlur = (e) => {
+    setIsDirty(true);
+  };
 
   return (
     <>
       <Form.Group className="mb-1">
         <Form.Label>{title}</Form.Label>
         <Form.Control
-          className="form-control was-validated"
-          onBlur={(e) => Input.onBlur(e)}
-          onChange={(e) => Input.onChange(e)}
-          value={Input.value}
-          as={textarea}
+          name={fieldname}
+          value={value}
           type={type}
-          placeholder={placeHolderValue}
+          as={textarea}
+          placeholder={placeholder}
+          onChange={(e) => onChange(e)}
+          onBlur={(e) => onBlur(e)}
         />
-        {Input.isDirty && !Input.inputValid && (
-          <Form.Text className="text-danger">{Input.errorMessage}</Form.Text>
+        {isDirty && !valid.inputValid && (
+          <Form.Text className="text-danger">{valid.errorMessage}</Form.Text>
         )}
       </Form.Group>
     </>
