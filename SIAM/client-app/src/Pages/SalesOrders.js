@@ -5,6 +5,9 @@ import UPagination from "../Components/UPagination";
 import SalesOrderDelete from "../Components/SalesOrderDelete";
 import SalesOrderModal from "../Components/SalesOrderModal";
 import { useLocalStorage } from "../Hooks/useLocalStorage";
+import Status from "../Components/Status"
+import moment from 'moment'
+import 'moment/locale/ru'
 
 const SalesOrders = () => {
   const [salesOrders, setSalesOrders] = useState([]);
@@ -45,19 +48,7 @@ const SalesOrders = () => {
       });
   };
 
-  function FormateDate(value) {
-    let result = new Intl.DateTimeFormat("ru", {
-      year: "numeric",
-      month: "long",
-      day: "2-digit"
-    }).format(value);
-    return result;
-  };
-
   useEffect(() => {
-    //FormateDate(Date(2010, 7, 5));
-    //console.log(FormateDate(Date(2010, 7, 5)));
-
     setLoading(true);
     setTimeout(() => {
       updateData();
@@ -73,18 +64,18 @@ const SalesOrders = () => {
         <>
           <Table className="me-auto" striped bordered hover>
             <thead>
-              <tr>
-                <th width="100px">Номер заказа</th>
+              <tr className="align-middle">
+                <th className="text-center" width="100px">Номер заказа</th>
                 <th>ФИО клиента</th>
-                <th width="200px">Дата заказа</th>
-                <th width="160px">Статус заказа</th>
+                <th className="text-center" width="200px">Дата заказа</th>
+                <th className="text-center" width="160px">Статус заказа</th>
                 <th width="40px" />
               </tr>
             </thead>
             <tbody>
               {currentItems.map((item) => (
-                <tr key={item.salesOrderId}>
-                  <td>{item.salesOrderId}</td>
+                <tr className="align-middle" key={item.salesOrderId}>
+                  <td className="text-center">{item.salesOrderId}</td>
                   <td
                     onClick={() => {
                       setCurrentSalesOrderId(item.salesOrderId);
@@ -98,9 +89,9 @@ const SalesOrders = () => {
                   >
                     {item.customer.name}
                   </td>
-                  <td>{item.orderDate}</td>
-                  <td>{item.salesStatus.name}</td>
-                  <td>
+                  <td className="text-center">{moment(item.orderDate).locale("ru").format('DD MMMM YYYY hh:mm')}</td>
+                  <td className="text-center"><Status status={item.salesStatus.name}/></td>
+                  <td className="text-center">
                     <SalesOrderDelete
                       id={item.salesOrderId}
                       updateData={updateData}

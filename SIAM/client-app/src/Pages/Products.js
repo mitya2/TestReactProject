@@ -61,17 +61,17 @@ const Products = () => {
         <>
           <Table className="me-auto" striped bordered hover>
             <thead>
-              <tr>
-                <th width="50px">Артикул</th>
+              <tr className="align-middle">
+                <th className="text-center" width="50px">Артикул</th>
                 <th>Наименование продукта</th>
-                <th width="150px">Цена, руб</th>
+                <th className="text-center" width="150px">Цена, руб</th>
                 <th width="40px" />
               </tr>
             </thead>
             <tbody>
               {currentItems.map((item) => (
-                <tr key={item.productId}>
-                  <td>{item.productId}</td>
+                <tr className="align-middle" key={item.productId}>
+                  <td className="text-center">{item.productId}</td>
                   <td
                     style={{
                       cursor: "pointer",
@@ -106,8 +106,8 @@ const Products = () => {
                       )}
                     </OverlayTrigger>
                   </td>
-                  <td>{item.price}</td>
-                  <td>
+                  <td className="text-center">{item.price}</td>
+                  <td className="text-center">
                     <ProductDelete
                       id={item.productId}
                       name={item.name}
