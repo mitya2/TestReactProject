@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Dropdown } from "react-bootstrap";
 import ValidatedInput from "./ValidatedInput";
 
 const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
@@ -30,11 +30,12 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
       // загружаем редактируемый заказа
       fetch("/api/sales_orders/" + id, {
         method: "GET",
-        headers: { 'Content-Type': 'application/json' },
-        })
+        headers: { "Content-Type": "application/json" },
+      })
         .then((response) => response.json())
         .then((order) => {
-            setCurrentSalesOrder(order);
+          setCurrentSalesOrder(order);
+          console.log(order);
         });
     } else {
       // создаем новый продукт для добавления
@@ -45,31 +46,50 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
         //comment: "",
       };
       setCurrentSalesOrder(newSalesOrder);
+      //console.log(currentSalesOrder.salesStatus.name);
     }
     // открываем модальное окно редактирования/добавления
     setShowUpdateModal(true);
   };
 
-  // изменяем поле продукта по ключу "name"
-  const updateValue = (e) => {
+  // изменяем поле заказа по ключу "name"
+  const updateValue = (key, value) => {
     const updateSalesOrder = {
       ...currentSalesOrder,
-      [e.currentTarget.name]: e.currentTarget.value,
+      [key]: value,
     };
     setCurrentSalesOrder(updateSalesOrder);
   };
+
+  // изменяем статус заказа
+  const updateStatusValue = (id, status) => {
+    const updateSalesOrder = {
+      ...currentSalesOrder,
+      salesStatusId: id,
+      salesStatus: {
+        ...currentSalesOrder.salesStatus,
+        salesStatusId: id,
+        name: status,
+      },
+    };
+    setCurrentSalesOrder(updateSalesOrder);
+  };
+
+  useEffect(() => {
+    console.log(currentSalesOrder);
+  }, [currentSalesOrder]);
 
   // сохраняем изменения на сервере
   const handleSave = () => {
     fetch("/api/sales_orders", {
       method: "POST",
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(currentSalesOrder),
     }).then((result) => {
-      console.log(result);
+      //console.log(result);
       // закрываем модальное окно
       setShowUpdateModal(false);
-      updateData(id==null);
+      updateData(id == null);
     });
   };
 
@@ -88,6 +108,58 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
       </Modal.Header>
       <Modal.Body>
         <Form>
+          {currentSalesOrder.salesStatus && (
+            <Dropdown style={{width: '100% !important'}}>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                {currentSalesOrder.salesStatus.name ?? ""}
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() => {
+                    updateStatusValue(1, "Создан");
+                  }}
+                >
+                  Создан
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    updateStatusValue(2, "Обрабатывается");
+                  }}
+                >
+                  Обрабатывается
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    updateStatusValue(3, "Принят");
+                  }}
+                >
+                  Принят
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    updateStatusValue(4, "Оплачен");
+                  }}
+                >
+                  Оплачен
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    updateStatusValue(5, "Готов к отгрузке");
+                  }}
+                >
+                  Готов к отгрузке
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    updateStatusValue(6, "Отгружен");
+                  }}
+                >
+                  Отгружен
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
         </Form>
       </Modal.Body>
       <Modal.Footer>

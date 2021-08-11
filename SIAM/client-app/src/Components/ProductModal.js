@@ -30,8 +30,8 @@ const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
       // загружаем редактируемый продукт
       fetch("/api/products/" + id, {
         method: "GET",
-        headers: { 'Content-Type': 'application/json' },
-        })
+        headers: { "Content-Type": "application/json" },
+      })
         .then((response) => response.json())
         .then((product) => {
           setCurrentProduct(product);
@@ -51,10 +51,10 @@ const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
   };
 
   // изменяем поле продукта по ключу "name"
-  const updateValue = (e) => {
+  const updateValue = (key, value) => {
     const updateProduct = {
       ...currentProduct,
-      [e.currentTarget.name]: e.currentTarget.value,
+      [key]: value,
     };
     setCurrentProduct(updateProduct);
   };
@@ -63,13 +63,12 @@ const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
   const handleSave = () => {
     fetch("/api/products", {
       method: "POST",
-      headers: { 'Content-Type': 'application/json' },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(currentProduct),
     }).then((result) => {
-      console.log(result);
       // закрываем модальное окно
       setShowUpdateModal(false);
-      updateData(id==null);
+      updateData(id == null);
     });
   };
 
@@ -121,7 +120,7 @@ const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
             title="Примечание"
             type="text"
             placeholder=""
-            value={currentProduct.comment}
+            value={currentProduct.comment ?? ""}
             textarea="textarea"
             validations={{
               maxLength: 50,

@@ -62,9 +62,13 @@ const Products = () => {
           <Table className="me-auto" striped bordered hover>
             <thead>
               <tr className="align-middle">
-                <th className="text-center" width="50px">Артикул</th>
+                <th className="text-center" width="50px">
+                  Артикул
+                </th>
                 <th>Наименование продукта</th>
-                <th className="text-center" width="150px">Цена, руб</th>
+                <th className="text-center" width="150px">
+                  Цена, руб
+                </th>
                 <th width="40px" />
               </tr>
             </thead>

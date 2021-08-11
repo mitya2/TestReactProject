@@ -15,9 +15,9 @@ const ValidatedInput = ({
 }) => {
   const [isDirty, setIsDirty] = useState(false);
   const valid = useValidation(String(value), validations, setValidated);
-
+  
   const onChange = (e) => {
-    setUpdate(e);
+    setUpdate(e.currentTarget.name, e.currentTarget.value);
   };
 
   const onBlur = (e) => {
