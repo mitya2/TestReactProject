@@ -200,7 +200,31 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
           )}
           <Form.Group className="mb-1">
             <Form.Label>Позиции заказа</Form.Label>
+          <div className="d-sm-flex justify-content-between">
+            <Button
+              onClick={() => {
+                //setCurrentSalesOrderId(null);
+                //setShowUpdateModal(true);
+              }}
+              variant="primary"
+            >
+              Добавить продукт
+            </Button>
+          </div>
           </Form.Group>
+          <ValidatedInput
+            fieldname="comment"
+            title="Примечание"
+            type="text"
+            placeholder=""
+            value={currentSalesOrder.comment || ''}
+            textarea="textarea"
+            validations={{
+              maxLength: 50,
+            }}
+            setUpdate={updateValue}
+            setValidated={setValidated1}
+          />
         </Form>
       </Modal.Body>
       <Modal.Footer>
