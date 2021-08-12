@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Form, Dropdown } from "react-bootstrap";
+import { Modal, Button, Form, FormControl } from "react-bootstrap";
+import CustomersDropDown from "./CustomersDropDown";
+import StatusesDropDown from "./StatusesDropDown";
 import ValidatedInput from "./ValidatedInput";
+import "react-datetime/css/react-datetime.css";
+import Datetime from "react-datetime";
+import moment from "moment";
 
 const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
   // обработка валидации формы
@@ -10,6 +15,8 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
   const [validated3, setValidated3] = useState(false);
 
   const [currentSalesOrder, setCurrentSalesOrder] = useState({});
+  const [statuses, setStatuses] = useState([]);
+  const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
     if (validated1 && validated2 && validated3) {
@@ -26,6 +33,28 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
 
   // обработка добавления/редактирования заказа
   const handleEntering = () => {
+    //загружаем клиентов
+    fetch("/api/customers", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setCustomers(data);
+        //console.log(data);
+      });
+
+    //загружаем статусы заказа
+    fetch("/api/sales_statuses", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setStatuses(data);
+        //console.log(data);
+      });
+
     if (id != null) {
       // загружаем редактируемый заказа
       fetch("/api/sales_orders/" + id, {
@@ -62,7 +91,7 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
   };
 
   // изменяем статус заказа
-  const updateStatusValue = (id, status) => {
+  const updateStatus = (id, status) => {
     const updateSalesOrder = {
       ...currentSalesOrder,
       salesStatusId: id,
@@ -72,6 +101,31 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
         name: status,
       },
     };
+    setCurrentSalesOrder(updateSalesOrder);
+  };
+
+  // изменяем статус заказа
+  const updateCustomer = (id, customer) => {
+    const updateSalesOrder = {
+      ...currentSalesOrder,
+      customerId: id,
+      customer: {
+        ...currentSalesOrder.customer,
+        customerId: id,
+        name: customer,
+      },
+    };
+    setCurrentSalesOrder(updateSalesOrder);
+  };
+
+  // изменяем дату заказа
+  const updateOrderDate = (e) => {
+    //console.log(e.format("DD-MM-YYYY"))
+    const updateSalesOrder = {
+      ...currentSalesOrder,
+      orderDate: e.format("YYYY-MM-DD"),
+    };
+    //console.log(e)
     setCurrentSalesOrder(updateSalesOrder);
   };
 
@@ -86,7 +140,7 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(currentSalesOrder),
     }).then((result) => {
-      //console.log(result);
+      console.log(result)
       // закрываем модальное окно
       setShowUpdateModal(false);
       updateData(id == null);
@@ -108,57 +162,33 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
       </Modal.Header>
       <Modal.Body>
         <Form>
+          <Form.Group className="mb-1">
+            <Form.Label>Дата заказа</Form.Label>
+            {currentSalesOrder && (
+              <Datetime
+                closeOnSelect
+                onChange={updateOrderDate}
+                dateFormat="DD-MM-YYYY"
+                value={moment(currentSalesOrder.orderDate).format("DD-MM-YYYY")}
+                timeFormat={false}
+              />
+            )}
+          </Form.Group>
+          {currentSalesOrder.customer && (
+            <CustomersDropDown
+              title={"Клиент"}
+              currentCustomer={currentSalesOrder.customer.name}
+              customers={customers}
+              updateCustomer={updateCustomer}
+            />
+          )}
           {currentSalesOrder.salesStatus && (
-            <Dropdown style={{width: '100% !important'}}>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                {currentSalesOrder.salesStatus.name ?? ""}
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  onClick={() => {
-                    updateStatusValue(1, "Создан");
-                  }}
-                >
-                  Создан
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => {
-                    updateStatusValue(2, "Обрабатывается");
-                  }}
-                >
-                  Обрабатывается
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => {
-                    updateStatusValue(3, "Принят");
-                  }}
-                >
-                  Принят
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => {
-                    updateStatusValue(4, "Оплачен");
-                  }}
-                >
-                  Оплачен
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => {
-                    updateStatusValue(5, "Готов к отгрузке");
-                  }}
-                >
-                  Готов к отгрузке
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => {
-                    updateStatusValue(6, "Отгружен");
-                  }}
-                >
-                  Отгружен
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+            <StatusesDropDown
+              title={"Статус заказа"}
+              currentStatus={currentSalesOrder.salesStatus.name}
+              statuses={statuses}
+              updateStatus={updateStatus}
+            />
           )}
         </Form>
       </Modal.Body>
@@ -167,7 +197,7 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
           Отмена
         </Button>
         <Button
-          disabled={!formValidated}
+          //disabled={!formValidated}
           variant="success"
           onClick={handleSave}
         >

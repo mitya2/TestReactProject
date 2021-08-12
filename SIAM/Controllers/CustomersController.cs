@@ -32,5 +32,12 @@ namespace TestDB.Controllers
             }
             return customer;
         }
+
+        [HttpGet("customers")]
+        public async Task<IEnumerable<Customer>> GetCustomers()
+        {
+            return await _customersRep.GetCustomersAsync();
+        }
+
     }
 }

@@ -96,7 +96,7 @@ const SalesOrders = () => {
                   <td className="text-center">
                     {moment(item.orderDate)
                       .locale("ru")
-                      .format("DD MMMM YYYY hh:mm")}
+                      .format("DD MMMM YYYY")}
                   </td>
                   <td className="text-center">
                     <Status status={item.salesStatus.name} />

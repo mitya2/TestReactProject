@@ -25,6 +25,16 @@ namespace TestDB.Repositories
         {
             return await appDBContext.Customers.FirstOrDefaultAsync(c => c.CustomerId == id);
         }
+
+        public async Task<IQueryable<Customer>> GetCustomersAsync()
+        {
+            return (await appDBContext.Customers.ToListAsync()).AsQueryable();
+        }
+
+        public IQueryable<Customer> GetCustomers()
+        {
+            return appDBContext.Customers;
+        }
         #endregion 
 
     }

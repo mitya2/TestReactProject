@@ -1,5 +1,6 @@
 ﻿using TestDB.Models;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace TestDB.Interfaces
 {
@@ -17,5 +18,17 @@ namespace TestDB.Interfaces
         /// Возвращает клиента (асинхронно)
         /// </summary>
         Task<Customer> GetCustomerAsync(int id);
+
+
+        /// <summary>
+        /// Возвращает всех клиентов
+        /// </summary>
+       IQueryable<Customer> GetCustomers();
+
+        /// <summary>
+        /// Возвращает всех клиентов (асинхронно)
+        /// </summary>
+        Task<IQueryable<Customer>> GetCustomersAsync();
+
     }
 }
