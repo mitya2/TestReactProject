@@ -114,6 +114,33 @@ namespace TestDB.Models
                         SalesStatusId = 5
                     }
                     );
+
+            modelBuilder.Entity<SalesOrderDetail>().HasData(
+                new SalesOrderDetail { SalesOrderDetailId = 1, SalesOrderId = 1, ProductId = 1, OrderQuantity = 5, UnitPrice = 100, ModifyDate = System.DateTime.Now.AddMonths(-1) },
+                new SalesOrderDetail { SalesOrderDetailId = 2, SalesOrderId = 1, ProductId = 2, OrderQuantity = 10, UnitPrice = 200, ModifyDate = System.DateTime.Now.AddMonths(-1) },
+                new SalesOrderDetail { SalesOrderDetailId = 3, SalesOrderId = 1, ProductId = 3, OrderQuantity = 15, UnitPrice = 300, ModifyDate = System.DateTime.Now.AddMonths(-1) },
+                new SalesOrderDetail { SalesOrderDetailId = 4, SalesOrderId = 1, ProductId = 4, OrderQuantity = 1, UnitPrice = 400, ModifyDate = System.DateTime.Now.AddMonths(-2) },
+                new SalesOrderDetail { SalesOrderDetailId = 5, SalesOrderId = 1, ProductId = 5, OrderQuantity = 2, UnitPrice = 500, ModifyDate = System.DateTime.Now.AddMonths(-3) },
+                new SalesOrderDetail { SalesOrderDetailId = 6, SalesOrderId = 1, ProductId = 6, OrderQuantity = 50, UnitPrice = 600, ModifyDate = System.DateTime.Now.AddMonths(-3) },
+
+                new SalesOrderDetail { SalesOrderDetailId = 7, SalesOrderId = 2, ProductId = 1, OrderQuantity = 5, UnitPrice = 100, ModifyDate = System.DateTime.Now.AddMonths(-2) },
+                new SalesOrderDetail { SalesOrderDetailId = 8, SalesOrderId = 2, ProductId = 2, OrderQuantity = 10, UnitPrice = 100, ModifyDate = System.DateTime.Now.AddMonths(-2) },
+                new SalesOrderDetail { SalesOrderDetailId = 9, SalesOrderId = 2, ProductId = 3, OrderQuantity = 20, UnitPrice = 100, ModifyDate = System.DateTime.Now.AddMonths(-2) },
+
+                new SalesOrderDetail { SalesOrderDetailId = 10, SalesOrderId = 3, ProductId = 1, OrderQuantity = 30, UnitPrice = 100, ModifyDate = System.DateTime.Now.AddMonths(-1) },
+                new SalesOrderDetail { SalesOrderDetailId = 11, SalesOrderId = 3, ProductId = 2, OrderQuantity = 40, UnitPrice = 100, ModifyDate = System.DateTime.Now.AddMonths(-1) },
+                new SalesOrderDetail { SalesOrderDetailId = 12, SalesOrderId = 3, ProductId = 5, OrderQuantity = 50, UnitPrice = 100, ModifyDate = System.DateTime.Now.AddMonths(-1) },
+                new SalesOrderDetail { SalesOrderDetailId = 13, SalesOrderId = 3, ProductId = 6, OrderQuantity = 60, UnitPrice = 100, ModifyDate = System.DateTime.Now.AddMonths(-1) },
+
+                new SalesOrderDetail { SalesOrderDetailId = 14, SalesOrderId = 4, ProductId = 1, OrderQuantity = 1, UnitPrice = 100, ModifyDate = System.DateTime.Now.AddMonths(-10) },
+
+                new SalesOrderDetail { SalesOrderDetailId = 15, SalesOrderId = 5, ProductId = 1, OrderQuantity = 10, UnitPrice = 100, ModifyDate = System.DateTime.Now.AddMonths(-10) },
+                new SalesOrderDetail { SalesOrderDetailId = 16, SalesOrderId = 5, ProductId = 2, OrderQuantity = 10, UnitPrice = 200, ModifyDate = System.DateTime.Now.AddMonths(-20) },
+                new SalesOrderDetail { SalesOrderDetailId = 17, SalesOrderId = 5, ProductId = 3, OrderQuantity = 10, UnitPrice = 300, ModifyDate = System.DateTime.Now.AddMonths(-30) },
+                new SalesOrderDetail { SalesOrderDetailId = 18, SalesOrderId = 5, ProductId = 4, OrderQuantity = 10, UnitPrice = 400, ModifyDate = System.DateTime.Now.AddMonths(-40) },
+                new SalesOrderDetail { SalesOrderDetailId = 19, SalesOrderId = 5, ProductId = 5, OrderQuantity = 10, UnitPrice = 500, ModifyDate = System.DateTime.Now.AddMonths(-50) },
+                new SalesOrderDetail { SalesOrderDetailId = 20, SalesOrderId = 5, ProductId = 6, OrderQuantity = 10, UnitPrice = 600, ModifyDate = System.DateTime.Now.AddMonths(-60) }
+               );
         }
     }
 }

@@ -9,7 +9,7 @@ namespace TestDB.Models
     public class SalesOrderDetail
     {
         [Key]
-        public int Id { get; set; }
+        public int SalesOrderDetailId { get; set; }
 
         [Display(Name = "Идентификатор заказа")]
         [Required]
@@ -31,6 +31,6 @@ namespace TestDB.Models
         [Required]
         public DateTime ModifyDate { get; set; }
 
-        public virtual Product Product { get; set; }
+        public Product Product { get; set; }
     }
 }

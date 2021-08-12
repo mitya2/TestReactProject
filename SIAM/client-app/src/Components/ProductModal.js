@@ -20,7 +20,7 @@ const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
   }, [validated1, validated2, validated3]);
   /////////////////////////////////////////////////
 
-  const handleClose = () => {
+  const handleHide = () => {
     setShowUpdateModal(false);
   };
 
@@ -39,10 +39,10 @@ const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
     } else {
       // создаем новый продукт для добавления
       const newProduct = {
-        id: null,
+        //productId: 0,
         name: "",
         price: "",
-        comment: "",
+        comment: null,
       };
       setCurrentProduct(newProduct);
     }
@@ -78,7 +78,7 @@ const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
       centered
       show={show}
       onEntering={handleEntering}
-      onHide={handleClose}
+      onHide={handleHide}
     >
       <Modal.Header>
         <Modal.Title>
@@ -92,7 +92,7 @@ const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
             title="Наименование продукта"
             type="text"
             placeholder="Введите наименование продукта"
-            value={currentProduct.name}
+            value={currentProduct.name || ''} 
             textarea="input"
             validations={{
               maxLength: 20,
@@ -107,7 +107,7 @@ const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
             title="Цена за ед, руб."
             type="text"
             placeholder="Введите цену продукта"
-            value={currentProduct.price}
+            value={currentProduct.price || ''}
             textarea="input"
             validations={{
               isPrice: false,
@@ -120,7 +120,7 @@ const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
             title="Примечание"
             type="text"
             placeholder=""
-            value={currentProduct.comment ?? ""}
+            value={currentProduct.comment || ''}
             textarea="textarea"
             validations={{
               maxLength: 50,
@@ -131,7 +131,7 @@ const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button variant="secondary" onClick={handleHide}>
           Отмена
         </Button>
         <Button

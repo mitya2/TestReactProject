@@ -28,8 +28,8 @@ namespace TestDB.Models
         [StringLength(2000)]
         public string Comment { get; set; }
 
-        public virtual SalesStatus SalesStatus { get; set; }
-        public virtual Customer Customer { get; set; }
+        public SalesStatus SalesStatus { get; set; }
+        public Customer Customer { get; set; }
         public List<SalesOrderDetail> SalesOrderDetails{ get; set; }
     }
 }

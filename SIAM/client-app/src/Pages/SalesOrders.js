@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Table, OverlayTrigger, Tooltip, Button } from "react-bootstrap";
+import { Table, Alert, Button } from "react-bootstrap";
 import Loading from "../Components/Loading";
 import UPagination from "../Components/UPagination";
 import SalesOrderDelete from "../Components/SalesOrderDelete";
 import SalesOrderModal from "../Components/SalesOrderModal";
+import StatusColor from "../Components/StatusColor";
 import { useLocalStorage } from "../Hooks/useLocalStorage";
-import Status from "../Components/Status";
 import moment from "moment";
 import "moment/locale/ru";
 
@@ -94,12 +94,17 @@ const SalesOrders = () => {
                     {item.customer.name}
                   </td>
                   <td className="text-center">
-                    {moment(item.orderDate)
-                      .locale("ru")
-                      .format("DD MMMM YYYY")}
+                    {moment(item.orderDate).locale("ru").format("DD MMMM YYYY")}
                   </td>
                   <td className="text-center">
-                    <Status status={item.salesStatus.name} />
+                    <Alert
+                      className="m-0 p-0"
+                      variant={StatusColor(item.salesStatus.name)}
+                    >
+                      <span style={{ fontSize: ".85em" }}>
+                        {String(item.salesStatus.name)}
+                      </span>
+                    </Alert>
                   </td>
                   <td className="text-center">
                     <SalesOrderDelete

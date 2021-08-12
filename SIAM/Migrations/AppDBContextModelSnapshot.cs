@@ -200,7 +200,7 @@ namespace TestDB.Migrations
                             SalesOrderId = 1,
                             Comment = "",
                             CustomerId = 1,
-                            OrderDate = new DateTime(2021, 8, 10, 16, 10, 32, 885, DateTimeKind.Local).AddTicks(4276),
+                            OrderDate = new DateTime(2021, 8, 12, 14, 1, 37, 662, DateTimeKind.Local).AddTicks(4854),
                             SalesStatusId = 1
                         },
                         new
@@ -208,7 +208,7 @@ namespace TestDB.Migrations
                             SalesOrderId = 2,
                             Comment = "Безналичная оплата",
                             CustomerId = 2,
-                            OrderDate = new DateTime(2021, 7, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2402),
+                            OrderDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3529),
                             SalesStatusId = 2
                         },
                         new
@@ -216,21 +216,21 @@ namespace TestDB.Migrations
                             SalesOrderId = 3,
                             Comment = "Оплата наличкой",
                             CustomerId = 3,
-                            OrderDate = new DateTime(2021, 5, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2473),
+                            OrderDate = new DateTime(2021, 5, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3607),
                             SalesStatusId = 3
                         },
                         new
                         {
                             SalesOrderId = 4,
                             CustomerId = 1,
-                            OrderDate = new DateTime(2021, 6, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2478),
+                            OrderDate = new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3613),
                             SalesStatusId = 4
                         },
                         new
                         {
                             SalesOrderId = 5,
                             CustomerId = 2,
-                            OrderDate = new DateTime(2021, 5, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2480),
+                            OrderDate = new DateTime(2021, 5, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3615),
                             SalesStatusId = 5
                         },
                         new
@@ -238,21 +238,21 @@ namespace TestDB.Migrations
                             SalesOrderId = 6,
                             Comment = "Оплата наличкой",
                             CustomerId = 3,
-                            OrderDate = new DateTime(2021, 6, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2482),
+                            OrderDate = new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3617),
                             SalesStatusId = 6
                         },
                         new
                         {
                             SalesOrderId = 7,
                             CustomerId = 1,
-                            OrderDate = new DateTime(2020, 8, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2483),
+                            OrderDate = new DateTime(2020, 8, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3619),
                             SalesStatusId = 5
                         });
                 });
 
             modelBuilder.Entity("TestDB.Models.SalesOrderDetail", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SalesOrderDetailId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -273,13 +273,195 @@ namespace TestDB.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SalesOrderDetailId");
 
                     b.HasIndex("ProductId");
 
                     b.HasIndex("SalesOrderId");
 
                     b.ToTable("SalesOrderDetails");
+
+                    b.HasData(
+                        new
+                        {
+                            SalesOrderDetailId = 1,
+                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5393),
+                            OrderQuantity = 5,
+                            ProductId = 1,
+                            SalesOrderId = 1,
+                            UnitPrice = 100m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 2,
+                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5663),
+                            OrderQuantity = 10,
+                            ProductId = 2,
+                            SalesOrderId = 1,
+                            UnitPrice = 200m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 3,
+                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5669),
+                            OrderQuantity = 15,
+                            ProductId = 3,
+                            SalesOrderId = 1,
+                            UnitPrice = 300m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 4,
+                            ModifyDate = new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5672),
+                            OrderQuantity = 1,
+                            ProductId = 4,
+                            SalesOrderId = 1,
+                            UnitPrice = 400m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 5,
+                            ModifyDate = new DateTime(2021, 5, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5673),
+                            OrderQuantity = 2,
+                            ProductId = 5,
+                            SalesOrderId = 1,
+                            UnitPrice = 500m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 6,
+                            ModifyDate = new DateTime(2021, 5, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5675),
+                            OrderQuantity = 50,
+                            ProductId = 6,
+                            SalesOrderId = 1,
+                            UnitPrice = 600m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 7,
+                            ModifyDate = new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5677),
+                            OrderQuantity = 5,
+                            ProductId = 1,
+                            SalesOrderId = 2,
+                            UnitPrice = 100m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 8,
+                            ModifyDate = new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5680),
+                            OrderQuantity = 10,
+                            ProductId = 2,
+                            SalesOrderId = 2,
+                            UnitPrice = 100m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 9,
+                            ModifyDate = new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5681),
+                            OrderQuantity = 20,
+                            ProductId = 3,
+                            SalesOrderId = 2,
+                            UnitPrice = 100m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 10,
+                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5683),
+                            OrderQuantity = 30,
+                            ProductId = 1,
+                            SalesOrderId = 3,
+                            UnitPrice = 100m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 11,
+                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5685),
+                            OrderQuantity = 40,
+                            ProductId = 2,
+                            SalesOrderId = 3,
+                            UnitPrice = 100m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 12,
+                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5687),
+                            OrderQuantity = 50,
+                            ProductId = 5,
+                            SalesOrderId = 3,
+                            UnitPrice = 100m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 13,
+                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5689),
+                            OrderQuantity = 60,
+                            ProductId = 6,
+                            SalesOrderId = 3,
+                            UnitPrice = 100m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 14,
+                            ModifyDate = new DateTime(2020, 10, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5690),
+                            OrderQuantity = 1,
+                            ProductId = 1,
+                            SalesOrderId = 4,
+                            UnitPrice = 100m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 15,
+                            ModifyDate = new DateTime(2020, 10, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5693),
+                            OrderQuantity = 10,
+                            ProductId = 1,
+                            SalesOrderId = 5,
+                            UnitPrice = 100m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 16,
+                            ModifyDate = new DateTime(2019, 12, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5695),
+                            OrderQuantity = 10,
+                            ProductId = 2,
+                            SalesOrderId = 5,
+                            UnitPrice = 200m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 17,
+                            ModifyDate = new DateTime(2019, 2, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5697),
+                            OrderQuantity = 10,
+                            ProductId = 3,
+                            SalesOrderId = 5,
+                            UnitPrice = 300m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 18,
+                            ModifyDate = new DateTime(2018, 4, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5698),
+                            OrderQuantity = 10,
+                            ProductId = 4,
+                            SalesOrderId = 5,
+                            UnitPrice = 400m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 19,
+                            ModifyDate = new DateTime(2017, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5700),
+                            OrderQuantity = 10,
+                            ProductId = 5,
+                            SalesOrderId = 5,
+                            UnitPrice = 500m
+                        },
+                        new
+                        {
+                            SalesOrderDetailId = 20,
+                            ModifyDate = new DateTime(2016, 8, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5702),
+                            OrderQuantity = 10,
+                            ProductId = 6,
+                            SalesOrderId = 5,
+                            UnitPrice = 600m
+                        });
                 });
 
             modelBuilder.Entity("TestDB.Models.SalesStatus", b =>

@@ -13,7 +13,7 @@ const useValidation = (value, validations, validated) => {
     for (const validation in validations) {
       switch (validation) {
         case "isEmpty":
-          if (value.length == 0) {
+          if (value.length === 0) {
             setEmptyError(true);
             setErrorMessage("Строка не должна быть пустой!");
           } else {
@@ -53,6 +53,8 @@ const useValidation = (value, validations, validated) => {
             setErrorMessage("Неверный формат цены!");
           }
           break;
+        default:
+          break;
       }
     }
   }, [value]);
@@ -80,6 +82,6 @@ const useValidation = (value, validations, validated) => {
     errorMessage,
     inputValid,
   };
-}
+};
 
 export { useValidation };

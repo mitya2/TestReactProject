@@ -80,7 +80,7 @@ namespace TestDB.Migrations
                 name: "SalesOrderDetails",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    SalesOrderDetailId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SalesOrderId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
@@ -90,7 +90,7 @@ namespace TestDB.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SalesOrderDetails", x => x.Id);
+                    table.PrimaryKey("PK_SalesOrderDetails", x => x.SalesOrderDetailId);
                     table.ForeignKey(
                         name: "FK_SalesOrderDetails_Products_ProductId",
                         column: x => x.ProductId,
@@ -154,13 +154,40 @@ namespace TestDB.Migrations
                 columns: new[] { "SalesOrderId", "Comment", "CustomerId", "OrderDate", "SalesStatusId" },
                 values: new object[,]
                 {
-                    { 1, "", 1, new DateTime(2021, 8, 10, 16, 10, 32, 885, DateTimeKind.Local).AddTicks(4276), 1 },
-                    { 2, "Безналичная оплата", 2, new DateTime(2021, 7, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2402), 2 },
-                    { 3, "Оплата наличкой", 3, new DateTime(2021, 5, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2473), 3 },
-                    { 4, null, 1, new DateTime(2021, 6, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2478), 4 },
-                    { 5, null, 2, new DateTime(2021, 5, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2480), 5 },
-                    { 7, null, 1, new DateTime(2020, 8, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2483), 5 },
-                    { 6, "Оплата наличкой", 3, new DateTime(2021, 6, 10, 16, 10, 32, 886, DateTimeKind.Local).AddTicks(2482), 6 }
+                    { 1, "", 1, new DateTime(2021, 8, 12, 14, 1, 37, 662, DateTimeKind.Local).AddTicks(4854), 1 },
+                    { 2, "Безналичная оплата", 2, new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3529), 2 },
+                    { 3, "Оплата наличкой", 3, new DateTime(2021, 5, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3607), 3 },
+                    { 4, null, 1, new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3613), 4 },
+                    { 5, null, 2, new DateTime(2021, 5, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3615), 5 },
+                    { 7, null, 1, new DateTime(2020, 8, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3619), 5 },
+                    { 6, "Оплата наличкой", 3, new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3617), 6 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "SalesOrderDetails",
+                columns: new[] { "SalesOrderDetailId", "ModifyDate", "OrderQuantity", "ProductId", "SalesOrderId", "UnitPrice" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5393), 5, 1, 1, 100m },
+                    { 18, new DateTime(2018, 4, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5698), 10, 4, 5, 400m },
+                    { 17, new DateTime(2019, 2, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5697), 10, 3, 5, 300m },
+                    { 16, new DateTime(2019, 12, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5695), 10, 2, 5, 200m },
+                    { 15, new DateTime(2020, 10, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5693), 10, 1, 5, 100m },
+                    { 14, new DateTime(2020, 10, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5690), 1, 1, 4, 100m },
+                    { 13, new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5689), 60, 6, 3, 100m },
+                    { 12, new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5687), 50, 5, 3, 100m },
+                    { 11, new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5685), 40, 2, 3, 100m },
+                    { 10, new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5683), 30, 1, 3, 100m },
+                    { 9, new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5681), 20, 3, 2, 100m },
+                    { 8, new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5680), 10, 2, 2, 100m },
+                    { 7, new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5677), 5, 1, 2, 100m },
+                    { 6, new DateTime(2021, 5, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5675), 50, 6, 1, 600m },
+                    { 5, new DateTime(2021, 5, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5673), 2, 5, 1, 500m },
+                    { 4, new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5672), 1, 4, 1, 400m },
+                    { 3, new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5669), 15, 3, 1, 300m },
+                    { 2, new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5663), 10, 2, 1, 200m },
+                    { 19, new DateTime(2017, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5700), 10, 5, 5, 500m },
+                    { 20, new DateTime(2016, 8, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5702), 10, 6, 5, 600m }
                 });
 
             migrationBuilder.CreateIndex(

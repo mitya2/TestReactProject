@@ -27,7 +27,7 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
   }, [validated1, validated2, validated3]);
   /////////////////////////////////////////////////
 
-  const handleClose = () => {
+  const handleHide = () => {
     setShowUpdateModal(false);
   };
 
@@ -41,7 +41,6 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
       .then((response) => response.json())
       .then((data) => {
         setCustomers(data);
-        //console.log(data);
       });
 
     //загружаем статусы заказа
@@ -52,7 +51,6 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
       .then((response) => response.json())
       .then((data) => {
         setStatuses(data);
-        //console.log(data);
       });
 
     if (id != null) {
@@ -64,18 +62,25 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
         .then((response) => response.json())
         .then((order) => {
           setCurrentSalesOrder(order);
-          console.log(order);
         });
     } else {
       // создаем новый продукт для добавления
       const newSalesOrder = {
-        id: null,
-        //name: "",
-        //price: "",
-        //comment: "",
+        orderDate: moment(new Date()).format("YYYY-MM-DD"),
+        salesStatusId: 1,
+        customerId: 1,
+        salesStatus: {
+          salesStatusId: 1,
+          name: "Создан",
+        },
+        customer: {
+          customerId: 1,
+          name: "Иванов",
+        },
+        salesOrderDetails: [],
+        comment: null,
       };
       setCurrentSalesOrder(newSalesOrder);
-      //console.log(currentSalesOrder.salesStatus.name);
     }
     // открываем модальное окно редактирования/добавления
     setShowUpdateModal(true);
@@ -120,17 +125,18 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
 
   // изменяем дату заказа
   const updateOrderDate = (e) => {
-    //console.log(e.format("DD-MM-YYYY"))
-    const updateSalesOrder = {
-      ...currentSalesOrder,
-      orderDate: e.format("YYYY-MM-DD"),
-    };
-    //console.log(e)
-    setCurrentSalesOrder(updateSalesOrder);
+    try {
+      const updateSalesOrder = {
+        ...currentSalesOrder,
+        orderDate: e.format("YYYY-MM-DD"),
+      };
+
+      setCurrentSalesOrder(updateSalesOrder);
+    } catch {}
   };
 
   useEffect(() => {
-    console.log(currentSalesOrder);
+    //console.log(currentSalesOrder);
   }, [currentSalesOrder]);
 
   // сохраняем изменения на сервере
@@ -140,7 +146,7 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(currentSalesOrder),
     }).then((result) => {
-      console.log(result)
+      //      console.log(result);
       // закрываем модальное окно
       setShowUpdateModal(false);
       updateData(id == null);
@@ -153,7 +159,7 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
       centered
       show={show}
       onEntering={handleEntering}
-      onHide={handleClose}
+      onHide={handleHide}
     >
       <Modal.Header>
         <Modal.Title>
@@ -167,6 +173,8 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
             {currentSalesOrder && (
               <Datetime
                 closeOnSelect
+                input="false"
+                locale="ru"
                 onChange={updateOrderDate}
                 dateFormat="DD-MM-YYYY"
                 value={moment(currentSalesOrder.orderDate).format("DD-MM-YYYY")}
@@ -190,10 +198,13 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
               updateStatus={updateStatus}
             />
           )}
+          <Form.Group className="mb-1">
+            <Form.Label>Позиции заказа</Form.Label>
+          </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
+        <Button variant="secondary" onClick={handleHide}>
           Отмена
         </Button>
         <Button

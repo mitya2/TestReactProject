@@ -28,9 +28,10 @@ namespace TestDB.Repositories
 
         public SalesOrder GetSalesOrder(int id)
         {
-            return appDBContext.SalesOrders .Include(s => s.Customer)
-                                            .Include(s => s.SalesStatus)
-                                            .FirstOrDefault(s => s.SalesOrderId == id);
+            return appDBContext.SalesOrders.Include(s => s.Customer)
+                                           .Include(s => s.SalesStatus)
+                                           .Include(s => s.SalesOrderDetails)
+                                           .FirstOrDefault(s => s.SalesOrderId == id);
         }
 
         public void SaveSalesOrder(SalesOrder salesOrder)
@@ -49,7 +50,7 @@ namespace TestDB.Repositories
 
         public async Task<SalesOrder> GetSalesOrderAsync(int id)
         {
-            return await appDBContext.SalesOrders.Include(s => s.Customer).Include(s => s.SalesStatus).FirstOrDefaultAsync(s => s.SalesOrderId == id);
+            return await appDBContext.SalesOrders.Include(s => s.Customer).Include(s => s.SalesStatus).Include(s => s.SalesOrderDetails).FirstOrDefaultAsync(s => s.SalesOrderId == id);
         }
 
         public async Task SaveSalesOrderAsync(SalesOrder salesOrder)

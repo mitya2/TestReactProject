@@ -22,18 +22,18 @@ namespace TestDB.Repositories
 
         public void DeleteSalesOrderDetail(int id)
         {
-            appDBContext.Remove(new SalesOrderDetail { Id = id });
+            appDBContext.Remove(new SalesOrderDetail { SalesOrderDetailId = id });
             appDBContext.SaveChanges();
         }
 
         public SalesOrderDetail GetSalesOrderDetail(int id)
         {
-            return appDBContext.SalesOrderDetails.Include(s => s.Product).FirstOrDefault(s => s.Id == id);
+            return appDBContext.SalesOrderDetails.Include(s => s.Product).FirstOrDefault(s => s.SalesOrderDetailId == id);
         }
 
         public void SaveSalesOrderDetail(SalesOrderDetail salesOrderDetail)
         {
-            if (salesOrderDetail.Id == default)
+            if (salesOrderDetail.SalesOrderDetailId == default)
                 appDBContext.Entry(salesOrderDetail).State = EntityState.Added;
             else
                 appDBContext.Entry(salesOrderDetail).State = EntityState.Modified;
@@ -47,12 +47,12 @@ namespace TestDB.Repositories
 
         public async Task<SalesOrderDetail> GetSalesOrderDetailAsync(int id)
         {
-            return await appDBContext.SalesOrderDetails.Include(s => s.Product).FirstOrDefaultAsync(s => s.Id == id);
+            return await appDBContext.SalesOrderDetails.Include(s => s.Product).FirstOrDefaultAsync(s => s.SalesOrderDetailId == id);
         }
 
         public async Task SaveSalesOrderDetailAsync(SalesOrderDetail salesOrderDetail)
         {
-            if (salesOrderDetail.Id == default)
+            if (salesOrderDetail.SalesOrderDetailId == default)
                 appDBContext.Entry(salesOrderDetail).State = EntityState.Added;
             else
                 appDBContext.Entry(salesOrderDetail).State = EntityState.Modified;
@@ -61,7 +61,7 @@ namespace TestDB.Repositories
 
         public async Task DeleteSalesOrderDetailAsync(int id)
         {
-            appDBContext.Remove(new SalesOrderDetail { Id = id });
+            appDBContext.Remove(new SalesOrderDetail { SalesOrderDetailId = id });
             await appDBContext.SaveChangesAsync();
         }
         #endregion
