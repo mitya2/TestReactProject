@@ -37,9 +37,9 @@ namespace TestDB.Models
                     );
 
             modelBuilder.Entity<Customer>().HasData(
-                    new Customer { CustomerId = 1, Name = "Иванов" },
-                    new Customer { CustomerId = 2, Name = "Петров" },
-                    new Customer { CustomerId = 3, Name = "Сидоров" }
+                    new Customer { CustomerId = 1, Name = "Иванов Иван Иванович" },
+                    new Customer { CustomerId = 2, Name = "Петров Петр Петрович" },
+                    new Customer { CustomerId = 3, Name = "Сидоров Сидор Сидорович" }
                     );
 
             modelBuilder.Entity<Product>().HasData(

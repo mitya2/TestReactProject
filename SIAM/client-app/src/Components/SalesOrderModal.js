@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Form, FormControl } from "react-bootstrap";
+import { Modal, Button, Form, Container, Row, Col } from "react-bootstrap";
 import CustomersDropDown from "./CustomersDropDown";
 import StatusesDropDown from "./StatusesDropDown";
 import ValidatedInput from "./ValidatedInput";
 import "react-datetime/css/react-datetime.css";
 import Datetime from "react-datetime";
 import moment from "moment";
+import "./css/FixedHeader.css";
+import SalesOrderDetails from "./SalesOrderDetails";
+import ProductsListToSelect from "./ProductsListToSelect";
 
 const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
   // обработка валидации формы
@@ -17,6 +20,8 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
   const [currentSalesOrder, setCurrentSalesOrder] = useState({});
   const [statuses, setStatuses] = useState([]);
   const [customers, setCustomers] = useState([]);
+  
+  const [showProductsList, setShowProductsList] = useState(false);
 
   useEffect(() => {
     if (validated1 && validated2 && validated3) {
@@ -54,7 +59,8 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
       });
 
     if (id != null) {
-      // загружаем редактируемый заказа
+      console.log("загружаем редактируемый заказ");
+      // загружаем редактируемый заказ
       fetch("/api/sales_orders/" + id, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -64,7 +70,7 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
           setCurrentSalesOrder(order);
         });
     } else {
-      // создаем новый продукт для добавления
+      // создаем новый заказ для добавления
       const newSalesOrder = {
         orderDate: moment(new Date()).format("YYYY-MM-DD"),
         salesStatusId: 1,
@@ -75,7 +81,7 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
         },
         customer: {
           customerId: 1,
-          name: "Иванов",
+          name: "Иванов Иван Иванович",
         },
         salesOrderDetails: [],
         comment: null,
@@ -135,8 +141,43 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
     } catch {}
   };
 
+  const addProductToOrder = (id, name, price) => {
+    console.log(currentSalesOrder);
+    currentSalesOrder.salesOrderDetails.push({
+      salesOrderId: currentSalesOrder.salesOrderId,
+      productId: id,
+      orderQuantity: 1,
+      unitPrice: price,
+      modifyDate: new Date(),
+      product: {
+        productId: id,
+        name: name,
+        price: price,
+      },
+    });
+    console.log(currentSalesOrder);
+    setCurrentSalesOrder(currentSalesOrder);
+  };
+
+  const deleteOrderProduct = (index) => {
+    
+    var trees = ["redwood", "bay", "cedar", "oak", "maple"];  
+
+    console.log(trees.length);  //  4
+    console.log(trees);         //  ["redwood", "bay", "cedar", "maple"]
+        trees.splice(0, 1);
+console.log(trees.length);  //  4
+console.log(trees);         //  ["redwood", "bay", "cedar", "maple"]
+
+    console.log(index);
+    currentSalesOrder.salesOrderDetails.slice(index, 1);
+    console.log("deleteOrderProduct")
+    console.log(currentSalesOrder.salesOrderDetails);
+    setCurrentSalesOrder(currentSalesOrder);
+  };
+
   useEffect(() => {
-    //console.log(currentSalesOrder);
+    console.log("useEffect");
   }, [currentSalesOrder]);
 
   // сохраняем изменения на сервере
@@ -146,7 +187,7 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(currentSalesOrder),
     }).then((result) => {
-      //      console.log(result);
+      console.log(result);
       // закрываем модальное окно
       setShowUpdateModal(false);
       updateData(id == null);
@@ -154,92 +195,123 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
   };
 
   return (
-    <Modal
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      show={show}
-      onEntering={handleEntering}
-      onHide={handleHide}
-    >
-      <Modal.Header>
-        <Modal.Title>
-          {id ? "Редактирование заказа" : "Добавление заказа"}
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form>
-          <Form.Group className="mb-1">
-            <Form.Label>Дата заказа</Form.Label>
-            {currentSalesOrder && (
-              <Datetime
-                closeOnSelect
-                input="false"
-                locale="ru"
-                onChange={updateOrderDate}
-                dateFormat="DD-MM-YYYY"
-                value={moment(currentSalesOrder.orderDate).format("DD-MM-YYYY")}
-                timeFormat={false}
-              />
-            )}
-          </Form.Group>
-          {currentSalesOrder.customer && (
-            <CustomersDropDown
-              title={"Клиент"}
-              currentCustomer={currentSalesOrder.customer.name}
-              customers={customers}
-              updateCustomer={updateCustomer}
-            />
-          )}
-          {currentSalesOrder.salesStatus && (
-            <StatusesDropDown
-              title={"Статус заказа"}
-              currentStatus={currentSalesOrder.salesStatus.name}
-              statuses={statuses}
-              updateStatus={updateStatus}
-            />
-          )}
-          <Form.Group className="mb-1">
-            <Form.Label>Позиции заказа</Form.Label>
-          <div className="d-sm-flex justify-content-between">
-            <Button
-              onClick={() => {
-                //setCurrentSalesOrderId(null);
-                //setShowUpdateModal(true);
-              }}
-              variant="primary"
-            >
-              Добавить продукт
-            </Button>
-          </div>
-          </Form.Group>
-          <ValidatedInput
-            fieldname="comment"
-            title="Примечание"
-            type="text"
-            placeholder=""
-            value={currentSalesOrder.comment || ''}
-            textarea="textarea"
-            validations={{
-              maxLength: 50,
-            }}
-            setUpdate={updateValue}
-            setValidated={setValidated1}
-          />
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleHide}>
-          Отмена
-        </Button>
-        <Button
-          //disabled={!formValidated}
-          variant="success"
-          onClick={handleSave}
-        >
-          {id ? "Сохранить" : "Добавить"}
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    <>
+      <Modal
+        size="lg"
+        //aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={show}
+        onEntering={handleEntering}
+        onHide={handleHide}
+      >
+        <Modal.Header>
+          <Modal.Title>
+            {id ? "Редактирование заказа" : "Добавление заказа"}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Container className="p-0">
+            <Row>
+              <Col>
+                <Form.Group className="mb-1">
+                  <Form.Label>Дата заказа</Form.Label>
+                  {currentSalesOrder && (
+                    <Datetime
+                      closeOnSelect
+                      input="false"
+                      locale="ru"
+                      onChange={updateOrderDate}
+                      dateFormat="DD-MM-YYYY"
+                      value={moment(currentSalesOrder.orderDate).format(
+                        "DD-MM-YYYY"
+                      )}
+                      timeFormat={false}
+                    />
+                  )}
+                </Form.Group>
+              </Col>
+              <Col>
+                {currentSalesOrder.salesStatus && (
+                  <StatusesDropDown
+                    title={"Статус заказа"}
+                    currentStatus={currentSalesOrder.salesStatus.name}
+                    statuses={statuses}
+                    updateStatus={updateStatus}
+                  />
+                )}
+              </Col>
+              {currentSalesOrder.salesOrderId && (
+                <Col xs={2}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Номер заказа</Form.Label>
+                    <Form.Control
+                      className="text-center"
+                      readOnly
+                      value={currentSalesOrder.salesOrderId || ""}
+                      type="text"
+                      as="input"
+                    />
+                  </Form.Group>
+                </Col>
+              )}
+            </Row>
+
+            <Row className="mb-1">
+              <Col>
+                {currentSalesOrder.customer && (
+                  <CustomersDropDown
+                    title={"Клиент"}
+                    currentCustomer={currentSalesOrder.customer.name}
+                    customers={customers}
+                    updateCustomer={updateCustomer}
+                  />
+                )}
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <SalesOrderDetails
+                  salesOrderDetails={currentSalesOrder.salesOrderDetails}
+                  setShowProductsList={setShowProductsList}
+                  deleteOrderProduct={deleteOrderProduct}
+                />
+                <ValidatedInput
+                  fieldname="comment"
+                  title="Примечание"
+                  type="text"
+                  placeholder=""
+                  value={currentSalesOrder.comment || ""}
+                  textarea="textarea"
+                  validations={{
+                    maxLength: 50,
+                  }}
+                  setUpdate={updateValue}
+                  setValidated={setValidated1}
+                />
+              </Col>
+            </Row>
+          </Container>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleHide}>
+            Отмена
+          </Button>
+          <Button
+            //disabled={!formValidated}
+            variant="success"
+            onClick={handleSave}
+          >
+            {id ? "Сохранить" : "Добавить"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <ProductsListToSelect
+        show={showProductsList}
+        addProductToOrder={addProductToOrder}
+        setShowProductsList={setShowProductsList}
+      />
+    </>
   );
 };
 

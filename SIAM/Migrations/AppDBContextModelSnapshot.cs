@@ -39,17 +39,17 @@ namespace TestDB.Migrations
                         new
                         {
                             CustomerId = 1,
-                            Name = "Иванов"
+                            Name = "Иванов Иван Иванович"
                         },
                         new
                         {
                             CustomerId = 2,
-                            Name = "Петров"
+                            Name = "Петров Петр Петрович"
                         },
                         new
                         {
                             CustomerId = 3,
-                            Name = "Сидоров"
+                            Name = "Сидоров Сидор Сидорович"
                         });
                 });
 
@@ -200,7 +200,7 @@ namespace TestDB.Migrations
                             SalesOrderId = 1,
                             Comment = "",
                             CustomerId = 1,
-                            OrderDate = new DateTime(2021, 8, 12, 14, 1, 37, 662, DateTimeKind.Local).AddTicks(4854),
+                            OrderDate = new DateTime(2021, 8, 13, 15, 20, 1, 248, DateTimeKind.Local).AddTicks(8970),
                             SalesStatusId = 1
                         },
                         new
@@ -208,7 +208,7 @@ namespace TestDB.Migrations
                             SalesOrderId = 2,
                             Comment = "Безналичная оплата",
                             CustomerId = 2,
-                            OrderDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3529),
+                            OrderDate = new DateTime(2021, 7, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(6986),
                             SalesStatusId = 2
                         },
                         new
@@ -216,21 +216,21 @@ namespace TestDB.Migrations
                             SalesOrderId = 3,
                             Comment = "Оплата наличкой",
                             CustomerId = 3,
-                            OrderDate = new DateTime(2021, 5, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3607),
+                            OrderDate = new DateTime(2021, 5, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(7058),
                             SalesStatusId = 3
                         },
                         new
                         {
                             SalesOrderId = 4,
                             CustomerId = 1,
-                            OrderDate = new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3613),
+                            OrderDate = new DateTime(2021, 6, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(7063),
                             SalesStatusId = 4
                         },
                         new
                         {
                             SalesOrderId = 5,
                             CustomerId = 2,
-                            OrderDate = new DateTime(2021, 5, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3615),
+                            OrderDate = new DateTime(2021, 5, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(7065),
                             SalesStatusId = 5
                         },
                         new
@@ -238,14 +238,14 @@ namespace TestDB.Migrations
                             SalesOrderId = 6,
                             Comment = "Оплата наличкой",
                             CustomerId = 3,
-                            OrderDate = new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3617),
+                            OrderDate = new DateTime(2021, 6, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(7067),
                             SalesStatusId = 6
                         },
                         new
                         {
                             SalesOrderId = 7,
                             CustomerId = 1,
-                            OrderDate = new DateTime(2020, 8, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(3619),
+                            OrderDate = new DateTime(2020, 8, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(7069),
                             SalesStatusId = 5
                         });
                 });
@@ -285,7 +285,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 1,
-                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5393),
+                            ModifyDate = new DateTime(2021, 7, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(8825),
                             OrderQuantity = 5,
                             ProductId = 1,
                             SalesOrderId = 1,
@@ -294,7 +294,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 2,
-                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5663),
+                            ModifyDate = new DateTime(2021, 7, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9101),
                             OrderQuantity = 10,
                             ProductId = 2,
                             SalesOrderId = 1,
@@ -303,7 +303,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 3,
-                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5669),
+                            ModifyDate = new DateTime(2021, 7, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9106),
                             OrderQuantity = 15,
                             ProductId = 3,
                             SalesOrderId = 1,
@@ -312,7 +312,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 4,
-                            ModifyDate = new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5672),
+                            ModifyDate = new DateTime(2021, 6, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9108),
                             OrderQuantity = 1,
                             ProductId = 4,
                             SalesOrderId = 1,
@@ -321,7 +321,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 5,
-                            ModifyDate = new DateTime(2021, 5, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5673),
+                            ModifyDate = new DateTime(2021, 5, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9111),
                             OrderQuantity = 2,
                             ProductId = 5,
                             SalesOrderId = 1,
@@ -330,7 +330,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 6,
-                            ModifyDate = new DateTime(2021, 5, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5675),
+                            ModifyDate = new DateTime(2021, 5, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9112),
                             OrderQuantity = 50,
                             ProductId = 6,
                             SalesOrderId = 1,
@@ -339,7 +339,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 7,
-                            ModifyDate = new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5677),
+                            ModifyDate = new DateTime(2021, 6, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9157),
                             OrderQuantity = 5,
                             ProductId = 1,
                             SalesOrderId = 2,
@@ -348,7 +348,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 8,
-                            ModifyDate = new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5680),
+                            ModifyDate = new DateTime(2021, 6, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9159),
                             OrderQuantity = 10,
                             ProductId = 2,
                             SalesOrderId = 2,
@@ -357,7 +357,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 9,
-                            ModifyDate = new DateTime(2021, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5681),
+                            ModifyDate = new DateTime(2021, 6, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9161),
                             OrderQuantity = 20,
                             ProductId = 3,
                             SalesOrderId = 2,
@@ -366,7 +366,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 10,
-                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5683),
+                            ModifyDate = new DateTime(2021, 7, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9163),
                             OrderQuantity = 30,
                             ProductId = 1,
                             SalesOrderId = 3,
@@ -375,7 +375,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 11,
-                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5685),
+                            ModifyDate = new DateTime(2021, 7, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9165),
                             OrderQuantity = 40,
                             ProductId = 2,
                             SalesOrderId = 3,
@@ -384,7 +384,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 12,
-                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5687),
+                            ModifyDate = new DateTime(2021, 7, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9166),
                             OrderQuantity = 50,
                             ProductId = 5,
                             SalesOrderId = 3,
@@ -393,7 +393,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 13,
-                            ModifyDate = new DateTime(2021, 7, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5689),
+                            ModifyDate = new DateTime(2021, 7, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9168),
                             OrderQuantity = 60,
                             ProductId = 6,
                             SalesOrderId = 3,
@@ -402,7 +402,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 14,
-                            ModifyDate = new DateTime(2020, 10, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5690),
+                            ModifyDate = new DateTime(2020, 10, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9170),
                             OrderQuantity = 1,
                             ProductId = 1,
                             SalesOrderId = 4,
@@ -411,7 +411,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 15,
-                            ModifyDate = new DateTime(2020, 10, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5693),
+                            ModifyDate = new DateTime(2020, 10, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9173),
                             OrderQuantity = 10,
                             ProductId = 1,
                             SalesOrderId = 5,
@@ -420,7 +420,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 16,
-                            ModifyDate = new DateTime(2019, 12, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5695),
+                            ModifyDate = new DateTime(2019, 12, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9175),
                             OrderQuantity = 10,
                             ProductId = 2,
                             SalesOrderId = 5,
@@ -429,7 +429,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 17,
-                            ModifyDate = new DateTime(2019, 2, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5697),
+                            ModifyDate = new DateTime(2019, 2, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9176),
                             OrderQuantity = 10,
                             ProductId = 3,
                             SalesOrderId = 5,
@@ -438,7 +438,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 18,
-                            ModifyDate = new DateTime(2018, 4, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5698),
+                            ModifyDate = new DateTime(2018, 4, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9178),
                             OrderQuantity = 10,
                             ProductId = 4,
                             SalesOrderId = 5,
@@ -447,7 +447,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 19,
-                            ModifyDate = new DateTime(2017, 6, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5700),
+                            ModifyDate = new DateTime(2017, 6, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9180),
                             OrderQuantity = 10,
                             ProductId = 5,
                             SalesOrderId = 5,
@@ -456,7 +456,7 @@ namespace TestDB.Migrations
                         new
                         {
                             SalesOrderDetailId = 20,
-                            ModifyDate = new DateTime(2016, 8, 12, 14, 1, 37, 663, DateTimeKind.Local).AddTicks(5702),
+                            ModifyDate = new DateTime(2016, 8, 13, 15, 20, 1, 249, DateTimeKind.Local).AddTicks(9182),
                             OrderQuantity = 10,
                             ProductId = 6,
                             SalesOrderId = 5,

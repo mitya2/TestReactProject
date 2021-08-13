@@ -31,6 +31,7 @@ namespace TestDB.Repositories
             return appDBContext.SalesOrders.Include(s => s.Customer)
                                            .Include(s => s.SalesStatus)
                                            .Include(s => s.SalesOrderDetails)
+                                           .ThenInclude(x => x.Product)
                                            .FirstOrDefault(s => s.SalesOrderId == id);
         }
 
@@ -40,6 +41,19 @@ namespace TestDB.Repositories
                 appDBContext.Entry(salesOrder).State = EntityState.Added;
             else
                 appDBContext.Entry(salesOrder).State = EntityState.Modified;
+
+            foreach (SalesOrderDetail item in salesOrder.SalesOrderDetails)
+            {
+                if (item.SalesOrderDetailId == default)
+                {
+                    appDBContext.Entry(item).State = EntityState.Added;
+                }
+                else
+                {
+                    appDBContext.Entry(item).State = EntityState.Modified;
+                }
+            }
+
             appDBContext.SaveChanges();
         }
 
@@ -50,7 +64,11 @@ namespace TestDB.Repositories
 
         public async Task<SalesOrder> GetSalesOrderAsync(int id)
         {
-            return await appDBContext.SalesOrders.Include(s => s.Customer).Include(s => s.SalesStatus).Include(s => s.SalesOrderDetails).FirstOrDefaultAsync(s => s.SalesOrderId == id);
+            return await appDBContext.SalesOrders.Include(s => s.Customer)
+                                                 .Include(s => s.SalesStatus)
+                                                 .Include(s => s.SalesOrderDetails)
+                                                 .ThenInclude(x => x.Product)
+                                                 .FirstOrDefaultAsync(s => s.SalesOrderId == id);
         }
 
         public async Task SaveSalesOrderAsync(SalesOrder salesOrder)
@@ -59,6 +77,19 @@ namespace TestDB.Repositories
                 appDBContext.Entry(salesOrder).State = EntityState.Added;
             else
                 appDBContext.Entry(salesOrder).State = EntityState.Modified;
+
+            foreach (SalesOrderDetail item in salesOrder.SalesOrderDetails)
+            {
+                if (item.SalesOrderDetailId == default)
+                {
+                    appDBContext.Entry(item).State = EntityState.Added;
+                }
+                else
+                {
+                    appDBContext.Entry(item).State = EntityState.Modified;
+                }
+            }
+
             await appDBContext.SaveChangesAsync();
         }
 

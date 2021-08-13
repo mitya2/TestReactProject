@@ -53,7 +53,7 @@ const SalesOrders = () => {
     setTimeout(() => {
       updateData();
       setLoading(false);
-    }, 500); // задержка для демонстрации отображения процесса загрузки данных
+    }, 0); // задержка для демонстрации отображения процесса загрузки данных
   }, []);
 
   return (
@@ -65,7 +65,7 @@ const SalesOrders = () => {
           <Table className="me-auto" striped bordered hover>
             <thead>
               <tr className="align-middle">
-                <th className="text-center" width="100px">
+                <th className="text-center" width="150px">
                   Номер заказа
                 </th>
                 <th>ФИО клиента</th>
