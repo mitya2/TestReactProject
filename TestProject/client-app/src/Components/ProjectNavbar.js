@@ -16,7 +16,7 @@ const ProjectNavbar = () => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="me-auto">
-          <Nav.Link eventKey="1" className="ms-2" as={Link} to="/">
+          <Nav.Link eventKey="1" className="ms-2" as={Link} to="/sales_orders">
             Список заказов
           </Nav.Link>
           <Nav.Link eventKey="2" className="ms-2" as={Link} to="/products">
@@ -24,9 +24,9 @@ const ProjectNavbar = () => {
           </Nav.Link>
         </Nav>
         <Nav>
-          <Link to="/About" className="btn btn-success m-2">
+          <Nav.Link eventKey="3" className="btn btn-success m-2" as={Link} to="/about">
             О проекте...
-          </Link>
+          </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

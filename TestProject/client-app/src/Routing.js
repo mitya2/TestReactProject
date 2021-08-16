@@ -17,9 +17,10 @@ const Routing = () => {
 
   return (
     <Switch>
-      <Route exact path="/" component={SalesOrders} />
-      <Route exact path="/products" component={Products} />
+      <Route exact path="/" component={About} />
       <Route exact path="/about" component={About} />
+      <Route exact path="/products" component={Products} />
+      <Route exact path="/sales_orders" component={SalesOrders} />
     </Switch>
   );
 };
