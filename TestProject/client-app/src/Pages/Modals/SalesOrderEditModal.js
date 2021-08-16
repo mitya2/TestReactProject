@@ -211,7 +211,7 @@ const SalesOrderEditModal = ({ show, id, setShowUpdateModal, updateData }) => {
       >
         <Modal.Header>
           <Modal.Title>
-            {id ? "Редактирование заказа" : "Добавление заказа"}
+            {id ? "Редактирование заказа" : "Создание заказа"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -310,7 +310,7 @@ const SalesOrderEditModal = ({ show, id, setShowUpdateModal, updateData }) => {
             variant="success"
             onClick={handleSave}
           >
-            {id ? "Сохранить" : "Добавить"}
+            {id ? "Сохранить" : "Создать"}
           </Button>
         </Modal.Footer>
       </Modal>

@@ -24,10 +24,10 @@ const ProductEditModal = ({ show, id, setShowUpdateModal, updateData }) => {
     setShowUpdateModal(false);
   };
 
-  // обработка добавления/редактирования продукта
+  // обработка добавления/редактирования товара
   const handleEntering = () => {
     if (id != null) {
-      // загружаем редактируемый продукт
+      // загружаем редактируемый товар
       fetch("/api/products/" + id, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -37,7 +37,7 @@ const ProductEditModal = ({ show, id, setShowUpdateModal, updateData }) => {
           setCurrentProduct(product);
         });
     } else {
-      // создаем новый продукт для добавления
+      // создаем новый товар для добавления
       const newProduct = {
         //productId: 0,
         name: "",
@@ -50,7 +50,7 @@ const ProductEditModal = ({ show, id, setShowUpdateModal, updateData }) => {
     setShowUpdateModal(true);
   };
 
-  // изменяем поле продукта по ключу "name"
+  // изменяем поле товара по ключу "name"
   const updateValue = (key, value) => {
     const updateProduct = {
       ...currentProduct,
@@ -82,17 +82,17 @@ const ProductEditModal = ({ show, id, setShowUpdateModal, updateData }) => {
     >
       <Modal.Header>
         <Modal.Title>
-          {id ? "Редактирование продукта" : "Добавление продукта"}
+          {id ? "Редактирование товара" : "Создание товара"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Form.Group className="mb-1">
-            <Form.Label>Наименование продукта</Form.Label>
+            <Form.Label>Наименование товара</Form.Label>
             <ValidatedInput
               fieldname="name"
               type="text"
-              placeholder="Введите наименование продукта"
+              placeholder="Введите наименование товара"
               value={currentProduct.name || ""}
               textarea="input"
               validations={{
@@ -109,7 +109,7 @@ const ProductEditModal = ({ show, id, setShowUpdateModal, updateData }) => {
             <ValidatedInput
               fieldname="price"
               type="text"
-              placeholder="Введите цену продукта"
+              placeholder="Введите цену товара"
               value={currentProduct.price || ""}
               textarea="input"
               validations={{
@@ -145,7 +145,7 @@ const ProductEditModal = ({ show, id, setShowUpdateModal, updateData }) => {
           variant="success"
           onClick={handleSave}
         >
-          {id ? "Сохранить" : "Добавить"}
+          {id ? "Сохранить" : "Создать"}
         </Button>
       </Modal.Footer>
     </Modal>

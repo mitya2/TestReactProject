@@ -31,7 +31,7 @@ namespace TestDB
             services.AddTransient<IProducts, ProductsRepository>();
             services.AddTransient<ICustomers, CustomersRepository>();
             services.AddTransient<ISalesOrders, SalesOrdersRepository>();
-            services.AddTransient<ISalesOrderDetails, SalesOrderDetailsRepository>();
+            //services.AddTransient<ISalesOrderDetails, SalesOrderDetailsRepository>();
             services.AddTransient<ISalesStatuses, SalesStatusesRepository>();
             
             services.AddSpaStaticFiles(configuration =>

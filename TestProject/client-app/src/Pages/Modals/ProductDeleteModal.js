@@ -25,7 +25,7 @@ const ProductDeleteModal = ({ id, name, updateData }) => {
 
       <Modal centered show={show} onHide={handleClose}>
       <Modal.Header style={{ backgroundColor: "#e46774" }}>
-          <Modal.Title style={{ color: "white"}}>Удаление продукта</Modal.Title>
+          <Modal.Title style={{ color: "white"}}>Удаление товара</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {"Вы действительно хотите удалить позицию: «" + name + "»?"}

@@ -17,7 +17,7 @@ namespace TestDB.Repositories
         #region
         public IQueryable<SalesOrder> GetSalesOrders()
         {
-            return appDBContext.SalesOrders.Include(s => s.Customer).Include(s=>s.SalesStatus);
+            return appDBContext.SalesOrders.Include(s => s.Customer).Include(s=>s.SalesStatus).OrderByDescending(s => s.SalesOrderId);
         }
 
         public void DeleteSalesOrder(int id)
@@ -55,7 +55,7 @@ namespace TestDB.Repositories
 
         public async Task<IQueryable<SalesOrder>> GetSalesOrdersAsync()
         {
-            return (await appDBContext.SalesOrders.Include(s => s.Customer).Include(s => s.SalesStatus).ToListAsync()).AsQueryable();
+            return (await appDBContext.SalesOrders.Include(s => s.Customer).Include(s => s.SalesStatus).OrderByDescending(s=>s.SalesOrderId).ToListAsync()).AsQueryable();
         }
 
         public async Task<SalesOrder> GetSalesOrderAsync(int id)

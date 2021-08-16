@@ -5,13 +5,13 @@ const About = () => {
   return (
    <div className="m-2">
      
-      <p>Проект выполнен в качестве тестового задания.</p> <hr/>
+      <p>Проект выполнен с целью изучения технологий и демонстрации уровня их владения.</p> <hr/>
         <p><b>Использованы следующие технологии</b></p>
-        <div>Back-end: ASP.net Сore 5, MS SQL, Entity Framework, MVC, LINQ, веб-API</div>
-        <p>Front-End: React, React-Bootstrap, Hooks</p>
+        <div>Back-end: <span className="fst-italic">ASP.net Сore 5, MS SQL, Entity Framework, MVC, LINQ, веб-API</span></div>
+        <p>Front-End: <span className="fst-italic">React, React-Bootstrap, Hooks</span></p>
         <p><b>Реализован следующий функционал</b></p>
-        <div>Создание заказа и редактирование заказа (нескольколько позиций в заказе)</div>
-        <div>Создание и редактирование списка продуктов</div>
+        <div>Создание и редактирование заказа (нескольколько позиций в заказе)</div>
+        <div>Создание и редактирование списка товаров</div>
         <div>Валидация введенных значений (на стороне клиента)</div>
         <div>Модальные окна диалогов</div>
         <div>Пейджинг таблиц (на стороне клиента)</div>

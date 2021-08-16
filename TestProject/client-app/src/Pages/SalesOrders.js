@@ -38,9 +38,9 @@ const SalesOrders = () => {
       .then((response) => response.json())
       .then((salesOrders) => {
         setSalesOrders(salesOrders);
-        // если было добавление то перемещаемся в конец списка
+        // если было добавление то перемещаемся в начало списка
         if (isAdding) {
-          setCurrentPage(Math.ceil(salesOrders.length / itemsPerPage));
+          setCurrentPage(1);
         }
         // если удалили последний элемент на странице - переходим на предыдущую
         if (Math.ceil(salesOrders.length / itemsPerPage) < currentPage)
@@ -129,7 +129,7 @@ const SalesOrders = () => {
               }}
               variant="primary"
             >
-              Добавить
+              Создать
             </Button>
 
             <UPagination

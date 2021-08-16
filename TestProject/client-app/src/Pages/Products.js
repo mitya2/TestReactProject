@@ -55,7 +55,7 @@ const Products = () => {
 
   return (
     <div className="m-2">
-      <h4>Список продуктов</h4>
+      <h4>Список товаров</h4>
       {isLoading && <Loading />}
       {!isLoading && (
         <>
@@ -65,7 +65,7 @@ const Products = () => {
                 <th className="fw-bold text-center" width="50px">
                   Артикул
                 </th>
-                <th className="fw-bold">Наименование продукта</th>
+                <th className="fw-bold">Наименование товара</th>
                 <th className="fw-bold text-center" width="150px">
                   Цена, руб
                 </th>
@@ -135,7 +135,7 @@ const Products = () => {
               }}
               variant="primary"
             >
-              Добавить
+              Создать
             </Button>
 
             <UPagination

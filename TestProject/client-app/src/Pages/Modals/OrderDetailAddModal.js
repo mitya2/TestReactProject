@@ -12,9 +12,9 @@ const OrderDetailAddModal = ({ show, addProductToOrder, setShowProductsList }) =
     setShowProductsList(false);
   };
 
-  // обработка добавления продукта в заказ
+  // обработка добавления товара в заказ
   const handleEntering = () => {
-    //загружаем продукты
+    //загружаем товары
     fetch("/api/products", {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -34,7 +34,7 @@ const OrderDetailAddModal = ({ show, addProductToOrder, setShowProductsList }) =
     >
       <Modal.Header style={{ backgroundColor: "#43a047" }}>
         <Modal.Title style={{ color: "white" }}>
-          Добавление продукта в заказ
+          Добавление товара в заказ
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -52,7 +52,7 @@ const OrderDetailAddModal = ({ show, addProductToOrder, setShowProductsList }) =
                 <th className="text-center" width="100px">
                   Артикул
                 </th>
-                <th>Наименование продукта</th>
+                <th>Наименование товара</th>
                 <th className="text-center" width="100px">
                   Цена, руб
                 </th>

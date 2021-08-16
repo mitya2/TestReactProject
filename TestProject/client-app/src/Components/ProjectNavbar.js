@@ -20,7 +20,7 @@ const ProjectNavbar = () => {
             Список заказов
           </Nav.Link>
           <Nav.Link eventKey="2" className="ms-2" as={Link} to="/products">
-            Продукты
+            Товары
           </Nav.Link>
         </Nav>
         <Nav>

@@ -95,7 +95,7 @@ const SalesOrderDetails = ({
         </div>
 
       <Button className="mt-2" onClick={() => setShowProductsList(true)} variant="primary">
-        Добавить продукт
+        Добавить товар
       </Button>
     </Form.Group>
   );
