@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import ValidatedInput from "./ValidatedInput";
+import ValidatedInput from "../../Components/ValidatedInput";
 
-const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
+const ProductEditModal = ({ show, id, setShowUpdateModal, updateData }) => {
   // обработка валидации формы
   const [formValidated, setFormValidated] = useState(false);
   const [validated1, setValidated1] = useState(false);
@@ -87,47 +87,53 @@ const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <ValidatedInput
-            fieldname="name"
-            title="Наименование продукта"
-            type="text"
-            placeholder="Введите наименование продукта"
-            value={currentProduct.name || ''} 
-            textarea="input"
-            validations={{
-              maxLength: 20,
-              minLength: 3,
-              isEmpty: false,
-            }}
-            setUpdate={updateValue}
-            setValidated={setValidated1}
-          />
-          <ValidatedInput
-            fieldname="price"
-            title="Цена за ед, руб."
-            type="text"
-            placeholder="Введите цену продукта"
-            value={currentProduct.price || ''}
-            textarea="input"
-            validations={{
-              isPrice: false,
-            }}
-            setUpdate={updateValue}
-            setValidated={setValidated2}
-          />
-          <ValidatedInput
-            fieldname="comment"
-            title="Примечание"
-            type="text"
-            placeholder=""
-            value={currentProduct.comment || ''}
-            textarea="textarea"
-            validations={{
-              maxLength: 50,
-            }}
-            setUpdate={updateValue}
-            setValidated={setValidated3}
-          />
+          <Form.Group className="mb-1">
+            <Form.Label>Наименование продукта</Form.Label>
+            <ValidatedInput
+              fieldname="name"
+              type="text"
+              placeholder="Введите наименование продукта"
+              value={currentProduct.name || ""}
+              textarea="input"
+              validations={{
+                maxLength: 20,
+                minLength: 3,
+                isEmpty: false,
+              }}
+              setUpdate={updateValue}
+              setValidated={setValidated1}
+            />
+          </Form.Group>
+          <Form.Group className="mb-1">
+            <Form.Label>Цена за ед, руб.</Form.Label>
+            <ValidatedInput
+              fieldname="price"
+              type="text"
+              placeholder="Введите цену продукта"
+              value={currentProduct.price || ""}
+              textarea="input"
+              validations={{
+                isPrice: false,
+              }}
+              setUpdate={updateValue}
+              setValidated={setValidated2}
+            />
+          </Form.Group>
+          <Form.Group className="mb-1">
+            <Form.Label>Примечание</Form.Label>
+            <ValidatedInput
+              fieldname="comment"
+              type="text"
+              placeholder=""
+              value={currentProduct.comment || ""}
+              textarea="textarea"
+              validations={{
+                maxLength: 50,
+              }}
+              setUpdate={updateValue}
+              setValidated={setValidated3}
+            />
+          </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
@@ -146,4 +152,4 @@ const ProductModal = ({ show, id, setShowUpdateModal, updateData }) => {
   );
 };
 
-export default ProductModal;
+export default ProductEditModal;

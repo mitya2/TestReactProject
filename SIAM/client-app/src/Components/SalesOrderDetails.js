@@ -1,15 +1,23 @@
 import React from "react";
 import { Form, Table, Button } from "react-bootstrap";
-import OrderProductDelete from "../Components/OrderProductDelete";
+import OrderProductDeleteModal from "../Pages/Modals/OrderDetailDeleteModal";
 
-const SalesOrderDetails = ({ salesOrderDetails, setShowProductsList, deleteOrderProduct }) => {
-  console.log("salesOrderDetails")
-  console.log(salesOrderDetails)
+const SalesOrderDetails = ({
+  salesOrderDetails,
+  setShowProductsList,
+  deleteOrderProduct,
+  setOrderDetailUpdate,
+  inputValid
+}) => {
+
+  const onChange = (e, name, index) => {
+    setOrderDetailUpdate(index, name, e.currentTarget.value);
+  };
+
   return (
     <Form.Group className="mb-1">
       <Form.Label>Позиции заказа</Form.Label>
       <div
-        className="mb-2"
         style={{
           border: "1px solid #dee2e6",
           maxHeight: "200px",
@@ -51,6 +59,7 @@ const SalesOrderDetails = ({ salesOrderDetails, setShowProductsList, deleteOrder
                       value={item.orderQuantity || ""}
                       type="text"
                       as="input"
+                      onChange = {(e) => onChange(e, "orderQuantity", salesOrderDetails.indexOf(item))}
                     />
                   </td>
                   <td className="text-center">
@@ -60,13 +69,14 @@ const SalesOrderDetails = ({ salesOrderDetails, setShowProductsList, deleteOrder
                       value={item.unitPrice || ""}
                       type="text"
                       as="input"
+                      onChange = {(e) => onChange(e, "unitPrice", salesOrderDetails.indexOf(item))}
                     />
                   </td>
                   <td width="40px">
-                    <OrderProductDelete
+                    <OrderProductDeleteModal
                       index={salesOrderDetails.indexOf(item)}
                       name={item.product.name}
-                      deleteOrderProduct = {deleteOrderProduct}
+                      deleteOrderProduct={deleteOrderProduct}
                     />
                   </td>
                 </tr>
@@ -75,16 +85,16 @@ const SalesOrderDetails = ({ salesOrderDetails, setShowProductsList, deleteOrder
           )}
         </Table>
         {salesOrderDetails && salesOrderDetails.length === 0 && (
-            <div className="m-2 text-center">Нет записей</div>
-          )}
+          <div className="m-2 text-center">Нет записей</div>
+        )}
       </div>
+      <div>
+      {!inputValid && (
+          <Form.Text className="text-danger">Ошибка в количестве или цене позиции!</Form.Text>
+        )}
+        </div>
 
-      <Button
-        onClick={() => {
-          setShowProductsList(true);
-        }}
-        variant="primary"
-      >
+      <Button className="mt-2" onClick={() => setShowProductsList(true)} variant="primary">
         Добавить продукт
       </Button>
     </Form.Group>

@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
-const OrderProductDelete = ({ index, name, deleteOrderProduct }) => {
+const OrderDetailDeleteModal = ({ index, name, deleteOrderProduct }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleDelete = (index) => {
+    deleteOrderProduct(index);
+    setShow(false);
+  };
 
   return (
     <>
       <Button
         style={{ fontSize: "1em", width: "25px", height: "25px" }}
         className="p-0 m-0"
-        onClick={handleShow}
+        onClick={() => setShow(true)}
         size="sm"
         variant="danger"
       >
@@ -34,10 +37,7 @@ const OrderProductDelete = ({ index, name, deleteOrderProduct }) => {
           </Button>
           <Button
             variant="danger"
-            onClick={() => {
-              deleteOrderProduct(index);
-              setShow(false);
-            }}
+            onClick={() => handleDelete(index)}
           >
             Удалить
           </Button>
@@ -47,4 +47,4 @@ const OrderProductDelete = ({ index, name, deleteOrderProduct }) => {
   );
 };
 
-export default OrderProductDelete;
+export default OrderDetailDeleteModal;

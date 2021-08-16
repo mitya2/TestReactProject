@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
-const ProductDelete = ({ id, name, updateData }) => {
+const ProductDeleteModal = ({ id, name, updateData }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -43,4 +43,4 @@ const ProductDelete = ({ id, name, updateData }) => {
   );
 };
 
-export default ProductDelete;
+export default ProductDeleteModal;

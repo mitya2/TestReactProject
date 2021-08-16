@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Button, Table } from "react-bootstrap";
 
-const ProductsListToSelect = ({ show, addProductToOrder, setShowProductsList }) => {
+const OrderDetailAddModal = ({ show, addProductToOrder, setShowProductsList }) => {
   const handleClose = () => {
-    //console.log('setShowProductsList');
     setShowProductsList(false);
   };
   const [products, setProducts] = useState([]);
@@ -94,4 +93,4 @@ const ProductsListToSelect = ({ show, addProductToOrder, setShowProductsList }) 
   );
 };
 
-export default ProductsListToSelect;
+export default OrderDetailAddModal;

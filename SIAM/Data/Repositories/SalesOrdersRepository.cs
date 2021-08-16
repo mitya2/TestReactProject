@@ -42,18 +42,14 @@ namespace TestDB.Repositories
             else
                 appDBContext.Entry(salesOrder).State = EntityState.Modified;
 
+            appDBContext.SalesOrderDetails.RemoveRange(appDBContext.SalesOrderDetails.Where(e => e.SalesOrderId == salesOrder.SalesOrderId));
+            appDBContext.SaveChanges();
+
             foreach (SalesOrderDetail item in salesOrder.SalesOrderDetails)
             {
-                if (item.SalesOrderDetailId == default)
-                {
-                    appDBContext.Entry(item).State = EntityState.Added;
-                }
-                else
-                {
-                    appDBContext.Entry(item).State = EntityState.Modified;
-                }
+                item.SalesOrderDetailId = default;
+                appDBContext.Entry(item).State = EntityState.Added;
             }
-
             appDBContext.SaveChanges();
         }
 
@@ -78,16 +74,13 @@ namespace TestDB.Repositories
             else
                 appDBContext.Entry(salesOrder).State = EntityState.Modified;
 
+            appDBContext.SalesOrderDetails.RemoveRange(appDBContext.SalesOrderDetails.Where(e => e.SalesOrderId == salesOrder.SalesOrderId));
+            appDBContext.SaveChanges();
+            
             foreach (SalesOrderDetail item in salesOrder.SalesOrderDetails)
             {
-                if (item.SalesOrderDetailId == default)
-                {
-                    appDBContext.Entry(item).State = EntityState.Added;
-                }
-                else
-                {
-                    appDBContext.Entry(item).State = EntityState.Modified;
-                }
+                item.SalesOrderDetailId = default;
+                appDBContext.Entry(item).State = EntityState.Added;
             }
 
             await appDBContext.SaveChangesAsync();

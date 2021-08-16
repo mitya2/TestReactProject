@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Table, OverlayTrigger, Tooltip, Button } from "react-bootstrap";
 import Loading from "../Components/Loading";
 import UPagination from "../Components/UPagination";
-import ProductDelete from "../Components/ProductDelete";
-import ProductModal from "../Components/ProductModal";
+import ProductDeleteModal from "./Modals/ProductDeleteModal";
+import ProductEditModal from "./Modals/ProductEditModal";
 import { useLocalStorage } from "../Hooks/useLocalStorage";
 
 const Products = () => {
@@ -62,11 +62,11 @@ const Products = () => {
           <Table className="me-auto" striped bordered hover>
             <thead>
               <tr className="align-middle">
-                <th className="text-center" width="50px">
+                <th className="fw-bold text-center" width="50px">
                   Артикул
                 </th>
-                <th>Наименование продукта</th>
-                <th className="text-center" width="150px">
+                <th className="fw-bold">Наименование продукта</th>
+                <th className="fw-bold text-center" width="150px">
                   Цена, руб
                 </th>
                 <th width="40px" />
@@ -112,7 +112,7 @@ const Products = () => {
                   </td>
                   <td className="text-center">{item.price}</td>
                   <td className="text-center">
-                    <ProductDelete
+                    <ProductDeleteModal
                       id={item.productId}
                       name={item.name}
                       updateData={updateData}
@@ -148,7 +148,7 @@ const Products = () => {
         </>
       )}
 
-      <ProductModal
+      <ProductEditModal
         show={showUpdateModal}
         id={currentProductId}
         setShowUpdateModal={setShowUpdateModal}

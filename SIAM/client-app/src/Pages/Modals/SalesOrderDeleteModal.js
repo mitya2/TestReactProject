@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 
-
-const SalesOrderDelete = ({ id, updateData }) => {
+const SalesOrderDeleteModal = ({ id, updateData }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -50,4 +49,4 @@ const SalesOrderDelete = ({ id, updateData }) => {
   );
 };
 
-export default SalesOrderDelete;
+export default SalesOrderDeleteModal;

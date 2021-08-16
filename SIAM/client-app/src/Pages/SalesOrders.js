@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Table, Alert, Button } from "react-bootstrap";
 import Loading from "../Components/Loading";
 import UPagination from "../Components/UPagination";
-import SalesOrderDelete from "../Components/SalesOrderDelete";
-import SalesOrderModal from "../Components/SalesOrderModal";
+import SalesOrderDelete from "./Modals/SalesOrderDeleteModal";
+import SalesOrderEditModal from "./Modals/SalesOrderEditModal";
 import StatusColor from "../Components/StatusColor";
 import { useLocalStorage } from "../Hooks/useLocalStorage";
 import moment from "moment";
@@ -141,7 +141,7 @@ const SalesOrders = () => {
           </div>
         </>
       )}
-      <SalesOrderModal
+      <SalesOrderEditModal
         show={showUpdateModal}
         id={currentSalesOrderId}
         setShowUpdateModal={setShowUpdateModal}

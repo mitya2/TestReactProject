@@ -1,35 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Container, Row, Col } from "react-bootstrap";
-import CustomersDropDown from "./CustomersDropDown";
-import StatusesDropDown from "./StatusesDropDown";
-import ValidatedInput from "./ValidatedInput";
+import CustomersDropDown from "../../Components/CustomersDropDown";
+import StatusesDropDown from "../../Components/StatusesDropDown";
+import ValidatedInput from "../../Components/ValidatedInput";
 import "react-datetime/css/react-datetime.css";
 import Datetime from "react-datetime";
 import moment from "moment";
-import "./css/FixedHeader.css";
-import SalesOrderDetails from "./SalesOrderDetails";
-import ProductsListToSelect from "./ProductsListToSelect";
+import "../../css/FixedHeader.css";
+import SalesOrderDetails from "../../Components/SalesOrderDetails";
+import OrderDetailAddModal from "./OrderDetailAddModal";
 
-const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
-  // обработка валидации формы
-  const [formValidated, setFormValidated] = useState(false);
-  const [validated1, setValidated1] = useState(false);
-  const [validated2, setValidated2] = useState(false);
-  const [validated3, setValidated3] = useState(false);
-
+const SalesOrderEditModal = ({ show, id, setShowUpdateModal, updateData }) => {
   const [currentSalesOrder, setCurrentSalesOrder] = useState({});
   const [statuses, setStatuses] = useState([]);
   const [customers, setCustomers] = useState([]);
-  
+
   const [showProductsList, setShowProductsList] = useState(false);
 
+  // обработка валидации формы
+  const [formValidated, setFormValidated] = useState(false);
+  const [orderValidated, setOrderValidated] = useState(false);
+  const [orderDetailsValidated, setOrderDetailsValidated] = useState(false);
+
+  const checkOrderDetailsValid = (orderDetails) => {
+    let isValid = true;
+    orderDetails.forEach((element) => {
+      let re = /^(1|[1-9][0-9]*)$/; // проверка на цифры
+      if (!re.test(String(element["orderQuantity"]).trim())) {
+        isValid = false;
+      }
+      re = /(?<=^| )\d+(\.\d+)?(?=$| )/; // проверка на цену
+      if (!re.test(String(element["unitPrice"]).trim())) {
+        isValid = false;
+      }
+    });
+    setOrderDetailsValidated(isValid);
+  };
+
   useEffect(() => {
-    if (validated1 && validated2 && validated3) {
+    if (orderValidated && orderDetailsValidated) {
       setFormValidated(true);
     } else {
       setFormValidated(false);
     }
-  }, [validated1, validated2, validated3]);
+  }, [orderValidated, orderDetailsValidated]);
   /////////////////////////////////////////////////
 
   const handleHide = () => {
@@ -59,7 +73,6 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
       });
 
     if (id != null) {
-      console.log("загружаем редактируемый заказ");
       // загружаем редактируемый заказ
       fetch("/api/sales_orders/" + id, {
         method: "GET",
@@ -67,6 +80,7 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
       })
         .then((response) => response.json())
         .then((order) => {
+          checkOrderDetailsValid(order.salesOrderDetails);
           setCurrentSalesOrder(order);
         });
     } else {
@@ -86,6 +100,7 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
         salesOrderDetails: [],
         comment: null,
       };
+      checkOrderDetailsValid(newSalesOrder.salesOrderDetails);
       setCurrentSalesOrder(newSalesOrder);
     }
     // открываем модальное окно редактирования/добавления
@@ -142,7 +157,6 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
   };
 
   const addProductToOrder = (id, name, price) => {
-    console.log(currentSalesOrder);
     currentSalesOrder.salesOrderDetails.push({
       salesOrderId: currentSalesOrder.salesOrderId,
       productId: id,
@@ -155,30 +169,22 @@ const SalesOrderModal = ({ show, id, setShowUpdateModal, updateData }) => {
         price: price,
       },
     });
-    console.log(currentSalesOrder);
-    setCurrentSalesOrder(currentSalesOrder);
+    setCurrentSalesOrder({ ...currentSalesOrder });
   };
 
   const deleteOrderProduct = (index) => {
-    
-    var trees = ["redwood", "bay", "cedar", "oak", "maple"];  
-
-    console.log(trees.length);  //  4
-    console.log(trees);         //  ["redwood", "bay", "cedar", "maple"]
-        trees.splice(0, 1);
-console.log(trees.length);  //  4
-console.log(trees);         //  ["redwood", "bay", "cedar", "maple"]
-
-    console.log(index);
-    currentSalesOrder.salesOrderDetails.slice(index, 1);
-    console.log("deleteOrderProduct")
-    console.log(currentSalesOrder.salesOrderDetails);
-    setCurrentSalesOrder(currentSalesOrder);
+    currentSalesOrder.salesOrderDetails.splice(index, 1);
+    checkOrderDetailsValid(currentSalesOrder.salesOrderDetails);
+    setCurrentSalesOrder({ ...currentSalesOrder });
   };
 
-  useEffect(() => {
-    console.log("useEffect");
-  }, [currentSalesOrder]);
+  const setOrderDetailUpdate = (index, name, value) => {
+    currentSalesOrder.salesOrderDetails[index][name] = value;
+    checkOrderDetailsValid(currentSalesOrder.salesOrderDetails);
+    setCurrentSalesOrder({ ...currentSalesOrder });
+  };
+
+  useEffect(() => {}, [currentSalesOrder]);
 
   // сохраняем изменения на сервере
   const handleSave = () => {
@@ -187,7 +193,7 @@ console.log(trees);         //  ["redwood", "bay", "cedar", "maple"]
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(currentSalesOrder),
     }).then((result) => {
-      console.log(result);
+      //console.log(result);
       // закрываем модальное окно
       setShowUpdateModal(false);
       updateData(id == null);
@@ -198,7 +204,6 @@ console.log(trees);         //  ["redwood", "bay", "cedar", "maple"]
     <>
       <Modal
         size="lg"
-        //aria-labelledby="contained-modal-title-vcenter"
         centered
         show={show}
         onEntering={handleEntering}
@@ -274,20 +279,24 @@ console.log(trees);         //  ["redwood", "bay", "cedar", "maple"]
                   salesOrderDetails={currentSalesOrder.salesOrderDetails}
                   setShowProductsList={setShowProductsList}
                   deleteOrderProduct={deleteOrderProduct}
+                  setOrderDetailUpdate={setOrderDetailUpdate}
+                  inputValid={orderDetailsValidated}
                 />
-                <ValidatedInput
-                  fieldname="comment"
-                  title="Примечание"
-                  type="text"
-                  placeholder=""
-                  value={currentSalesOrder.comment || ""}
-                  textarea="textarea"
-                  validations={{
-                    maxLength: 50,
-                  }}
-                  setUpdate={updateValue}
-                  setValidated={setValidated1}
-                />
+                <Form.Group className="mb-1">
+                  <Form.Label>Примечание</Form.Label>
+                  <ValidatedInput
+                    fieldname="comment"
+                    type="text"
+                    placeholder=""
+                    value={currentSalesOrder.comment || ""}
+                    textarea="textarea"
+                    validations={{
+                      maxLength: 50,
+                    }}
+                    setUpdate={updateValue}
+                    setValidated={setOrderValidated}
+                  />
+                </Form.Group>
               </Col>
             </Row>
           </Container>
@@ -297,7 +306,7 @@ console.log(trees);         //  ["redwood", "bay", "cedar", "maple"]
             Отмена
           </Button>
           <Button
-            //disabled={!formValidated}
+            disabled={!formValidated}
             variant="success"
             onClick={handleSave}
           >
@@ -306,7 +315,7 @@ console.log(trees);         //  ["redwood", "bay", "cedar", "maple"]
         </Modal.Footer>
       </Modal>
 
-      <ProductsListToSelect
+      <OrderDetailAddModal
         show={showProductsList}
         addProductToOrder={addProductToOrder}
         setShowProductsList={setShowProductsList}
@@ -315,4 +324,4 @@ console.log(trees);         //  ["redwood", "bay", "cedar", "maple"]
   );
 };
 
-export default SalesOrderModal;
+export default SalesOrderEditModal;
