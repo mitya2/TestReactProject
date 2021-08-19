@@ -29,7 +29,7 @@ namespace DemoProject.Controllers
         [HttpGet("products")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IQueryable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             var products = await _productsRep.GetProductsAsync();
             if (!products.Any())
@@ -47,9 +47,9 @@ namespace DemoProject.Controllers
         [HttpGet("products/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public ActionResult<Product> GetProduct(int id)
         {
-            var product = await _productsRep.GetProductAsync(id);
+            Product product = _productsRep.GetProduct(id);
 
             if (product == null)
             {

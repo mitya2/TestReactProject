@@ -1,4 +1,5 @@
 ﻿using DemoProject.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -38,7 +39,6 @@ namespace DemoProject.Interfaces
         /// Изменяет или добавляет продкт (асинхронно)
         /// </summary>
         Task<int> SaveProductAsync(Product product);
-
 
         /// <summary>
         /// Удаляет продукт
