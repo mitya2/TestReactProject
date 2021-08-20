@@ -10,85 +10,269 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 using System.Net;
 using System.Collections.Generic;
 using DemoProject.Service;
+using DemoProject.Test;
 
-namespace TestTB.TestProject
+namespace TestDB.TestProject
 {
     [TestFixture]
     public class ProductControllerTests
     {
-        ProductsController controller;
-        IProducts dataStore;
-        DbContextOptionsBuilder<AppDBContext> optionsBuilder;
+        TestDatabase testDatabase;
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
-            optionsBuilder = new DbContextOptionsBuilder<AppDBContext>();
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\mssqllocaldb; Database=VODB; MultipleActiveResultSets=True; Trusted_Connection=True;");
-            //AppDBContext dbContext = new AppDBContext(optionsBuilder.Options);
-
-            /*int productsCount = 5;
-
-            // создаем фейковый контекст БД
-            dataStore = A.Fake<IProducts>();
-            // создаем фейковую выборку объектов
-            IQueryable<Product> fakeProducts = A.CollectionOfDummy<Product>(productsCount).AsQueryable();
-
-
-            fakeProducts.First();
-            for (int i = 0; i < 5; i++)
-            {
-                fakeProducts.ToList()[i].ProductId = i + 1;
-                fakeProducts.ToList()[i].Name = "Продукт " + i.ToString();
-                fakeProducts.ToList()[i].Price = i * 100;
-            }
-
-            // связываем данные с контроллром
-            A.CallTo(() => dataStore.GetProductsAsync()).Returns(Task.FromResult(fakeProducts));
-            controller = new ProductsController(dataStore);*/
+            testDatabase = new TestDatabase();
         }
 
         [Test]
-        public async Task GetProducts()
+        public async Task GetProducts_Success()
         {
-            using (AppDBContext dbContext = new AppDBContext(optionsBuilder.Options))
+            int products_count = 14; // 14 записей согласно начальному значению модели
+           
+            using (var transaction = testDatabase.Connection.BeginTransaction())
             {
-                controller = new ProductsController(dbContext as IProducts);
+                using (var context = testDatabase.CreateContext(transaction))
+                {
+                    IProducts productsRepository = new ProductsRepository(context);
+                    ProductsController controller = new ProductsController(productsRepository);
 
-                // выполняем тестируемый метод
-                var actionResult = await controller.GetProducts();
-                var okResult = actionResult.Result as OkObjectResult;
-                IQueryable<Product> products = okResult.Value as IQueryable<Product>;
+                    // выполняем тестируемый метод
+                    var actionResult = await controller.GetProducts();
+                    var result = actionResult.Result as OkObjectResult;
 
-                // проверяем результат
-                Assert.IsNotNull(okResult);
-                Assert.AreEqual(okResult.StatusCode, 200);
-                Assert.AreEqual(products.Count(), 5);
+                    // проверяем результат
+                    Assert.IsNotNull(result);
+                    Assert.AreEqual(result.StatusCode, 200);
+                    Assert.AreEqual((result.Value as IQueryable<Product>).Count(), products_count);
+                }
             }
         }
 
         [Test]
-        public void GetProduct_Existing()
+        public async Task GetProduct_Success()
         {
-            using (AppDBContext dbContext = new AppDBContext(optionsBuilder.Options))
+            int product_id = 1; // от 1 до 14
+
+            using (var transaction = testDatabase.Connection.BeginTransaction())
             {
-                int product_id = 2;
+                using (var context = testDatabase.CreateContext(transaction))
+                {
+                    IProducts productsRepository = new ProductsRepository(context);
+                    ProductsController controller = new ProductsController(productsRepository);
 
-                // выполняем тестируемый метод
-                var actionResult = controller.GetProduct(product_id);
-                var okResult = actionResult.Result as OkObjectResult;
-                Product product = okResult.Value as Product;
+                    // выполняем тестируемый метод
+                    var actionResult = await controller.GetProduct(product_id);
+                    var result = actionResult.Result as OkObjectResult;
 
-                // проверяем результат
-                Assert.IsNotNull(okResult);
-                Assert.AreEqual(okResult.StatusCode, 200);
-                Assert.IsNotNull(product);
-                Assert.AreEqual(product.ProductId, product_id);
+                    // проверяем результат
+                    Assert.IsNotNull(result);
+                    Assert.AreEqual(result.StatusCode, 200);
+                    
+                    Assert.IsNotNull(result.Value);
+                    if (result.Value != null)
+                    {
+                        Assert.AreEqual((result.Value as Product).ProductId, product_id);
+                    }
+                }
             }
         }
 
+        [Test]
+        public async Task GetProduct_UnSuccess()
+        {
+            int product_id = 44; // больше 14
+
+            using (var transaction = testDatabase.Connection.BeginTransaction())
+            {
+                using (var context = testDatabase.CreateContext(transaction))
+                {
+                    IProducts productsRepository = new ProductsRepository(context);
+                    ProductsController controller = new ProductsController(productsRepository);
+
+                    // выполняем тестируемый метод
+                    var actionResult = await controller.GetProduct(product_id);
+                    var result = actionResult.Result as NotFoundResult;
+
+                    // проверяем результат
+                    Assert.IsNotNull(result);
+                    Assert.AreEqual(result.StatusCode, 404);
+                }
+            }
+        }
+
+        [Test]
+        public async Task UpdateProduct_Update_Success()
+        {
+            int product_id = 10;
+            Product product = new Product() { ProductId = product_id, Comment = "Тест", Name = "Тест", Price = 50 };
+
+            using (var transaction = testDatabase.Connection.BeginTransaction())
+            {
+                using (var context = testDatabase.CreateContext(transaction))
+                {
+                    IProducts productsRepository = new ProductsRepository(context);
+                    ProductsController controller = new ProductsController(productsRepository);
+
+                    // выполняем тестируемый метод
+                    var actionResult = await controller.UpdateProduct(product);
+                    var result = actionResult as OkResult;
+
+                    // проверяем результат
+                    Assert.IsNotNull(actionResult);
+                    Assert.AreEqual(result.StatusCode, 200);
+
+
+                    // выполняем тестируемый метод
+                    var actionResult2 = await controller.GetProduct(product_id);
+                    var result2 = actionResult2.Result as OkObjectResult;
+
+                    // проверяем результат
+                    Assert.IsNotNull(result2);
+                    Assert.AreEqual(result2.StatusCode, 200);
+
+                    Assert.IsNotNull(result2.Value);
+                    if (result2.Value != null)
+                    {
+                        Assert.AreEqual((result2.Value as Product).Comment, "Тест");
+                    }
+
+                }
+            }
+        }
+
+        [Test]
+        public async Task UpdateProduct_Update_UnSuccess()
+        {
+            int product_id = 100;
+            Product product = new Product() { ProductId = product_id, Comment = "Тест", Name = "Тест", Price = 50 };
+
+            using (var transaction = testDatabase.Connection.BeginTransaction())
+            {
+                using (var context = testDatabase.CreateContext(transaction))
+                {
+                    IProducts productsRepository = new ProductsRepository(context);
+                    ProductsController controller = new ProductsController(productsRepository);
+
+                    // выполняем тестируемый метод
+                    var actionResult = await controller.UpdateProduct(product);
+                    var result = actionResult as NotFoundResult;
+
+                    // проверяем результат
+                    Assert.IsNotNull(actionResult);
+                    Assert.AreEqual(result.StatusCode, 404);
+                }
+            }
+        }
+
+        [Test]
+        public async Task UpdateProduct_Add_Success()
+        {
+            int products_count = 14; // 14 записей согласно начальному значению модели
+            int products_id = default(int);
+            Product product = new Product() {ProductId = products_id, Comment = "Тест", Name = "Тест", Price = 50 };
+
+            using (var transaction = testDatabase.Connection.BeginTransaction())
+            {
+                using (var context = testDatabase.CreateContext(transaction))
+                {
+                    IProducts productsRepository = new ProductsRepository(context);
+                    ProductsController controller = new ProductsController(productsRepository);
+
+                    // выполняем тестируемый метод
+                    var actionResult = await controller.UpdateProduct(product);
+                    var result = actionResult as OkResult;
+
+                    // проверяем результат
+                    Assert.IsNotNull(actionResult);
+                    Assert.AreEqual(result.StatusCode, 200);
+
+
+                    // выполняем тестируемый метод
+                    var actionResult2 = await controller.GetProducts();
+                    var result2 = actionResult2.Result as OkObjectResult;
+
+                    // проверяем результат
+                    // проверяем результат
+                    Assert.IsNotNull(result2);
+                    Assert.AreEqual(result2.StatusCode, 200);
+                    Assert.AreEqual((result2.Value as IQueryable<Product>).Count(), products_count+1); // проверяем на увеличение количества записей
+                }
+            }
+        }
+
+        [Test]
+        public async Task UpdateProduct_Add_UnSuccess()
+        {
+            int products_id = 15;
+            Product product = new Product() { ProductId = products_id, Comment = "Тест", Name = "Тест", Price = 50 };
+
+            using (var transaction = testDatabase.Connection.BeginTransaction())
+            {
+                using (var context = testDatabase.CreateContext(transaction))
+                {
+                    IProducts productsRepository = new ProductsRepository(context);
+                    ProductsController controller = new ProductsController(productsRepository);
+
+                    // выполняем тестируемый метод
+                    var actionResult = await controller.UpdateProduct(product);
+                    var result = actionResult as NotFoundResult;
+
+                    // проверяем результат
+                    Assert.IsNotNull(actionResult);
+                    Assert.AreEqual(result.StatusCode, 404);
+                }
+            }
+        }
+
+
+        [Test]
+        public async Task DeleteProduct_UnSuccess()
+        {
+            int products_id = 15;
+
+            using (var transaction = testDatabase.Connection.BeginTransaction())
+            {
+                using (var context = testDatabase.CreateContext(transaction))
+                {
+                    IProducts productsRepository = new ProductsRepository(context);
+                    ProductsController controller = new ProductsController(productsRepository);
+
+                    // выполняем тестируемый метод
+                    var actionResult = await controller.DeleteProduct(products_id);
+                    var result = actionResult as NotFoundResult;
+
+                    // проверяем результат
+                    Assert.IsNotNull(actionResult);
+                    Assert.AreEqual(result.StatusCode, 404);
+                }
+            }
+        }
+
+        [Test]
+        public async Task DeleteProduct_Success()
+        {
+            int product_id = 10;
+            using (var transaction = testDatabase.Connection.BeginTransaction())
+            {
+                using (var context = testDatabase.CreateContext(transaction))
+                {
+                    IProducts productsRepository = new ProductsRepository(context);
+                    ProductsController controller = new ProductsController(productsRepository);
+
+                    // выполняем тестируемый метод
+                    var actionResult = await controller.DeleteProduct(product_id);
+                    var result = actionResult as OkResult;
+
+                    // проверяем результат
+                    Assert.IsNotNull(actionResult);
+                    Assert.AreEqual(result.StatusCode, 200);
+                }
+            }
+        }
     }
 }

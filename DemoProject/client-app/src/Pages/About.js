@@ -6,7 +6,7 @@ const About = () => {
    <div className="m-2">
       <p>Проект выполнен с целью изучения технологий и демонстрации уровня их владения.</p> <hr/>
         <p className="mb-0"><b>Использованы следующие технологии</b></p>
-        <div>Back-end: <span className="fst-italic">ASP.net Сore 5, MS SQL, Entity Framework, MVC, LINQ, веб-API</span></div>
+        <div>Back-end: <span className="fst-italic">ASP.net Сore 5, MS SQL, Entity Framework, MVC, LINQ, Web API, NUnit</span></div>
         <p>Front-End: <span className="fst-italic">React, React-Bootstrap, Hooks</span></p>
         <p className="mb-0"><b>Реализован следующий функционал</b></p>
         <div>Создание и редактирование заказа (нескольколько позиций в заказе)</div>

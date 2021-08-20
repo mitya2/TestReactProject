@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace DemoProject.Models
 {
+
     /// <summary>
     /// Класс контекста БД
     /// </summary>

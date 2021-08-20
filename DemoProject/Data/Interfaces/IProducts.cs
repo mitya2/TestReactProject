@@ -10,20 +10,21 @@ namespace DemoProject.Interfaces
     /// </summary>
     public interface IProducts
     {
+
         /// <summary>
         /// Возвращает продукт
         /// </summary>
         Product GetProduct(int id);
 
         /// <summary>
-        /// Возвращает продукт (асинхронно)
-        /// </summary>
-        Task<Product> GetProductAsync(int id);
-
-        /// <summary>
         /// Возвращает все продукты
         /// </summary>
         IQueryable<Product> GetProducts();
+        
+        /// <summary>
+        /// Возвращает продукт (асинхронно)
+        /// </summary>
+        Task<Product> GetProductAsync(int id);
 
         /// <summary>
         /// Возвращает все продукты (асинхронно)

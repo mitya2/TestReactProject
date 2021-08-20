@@ -12,13 +12,18 @@ namespace DemoProject.Repositories
     /// </summary>
     public class ProductsRepository : BaseRepository, IProducts
     {
-        public ProductsRepository(AppDBContext appDBContext):base(appDBContext)  { }
+        public ProductsRepository(AppDBContext appDBContext):base(appDBContext)  { } 
 
         // Реализация интерфейса IProducts
         #region
         public IQueryable<Product> GetProducts()
         {
-            return appDBContext.Products;
+            return appDBContext.Products.ToList().AsQueryable();
+        }
+
+        public Product GetProduct(int id)
+        {
+            return appDBContext.Products.FirstOrDefault(p => p.ProductId == id);
         }
 
         public async Task<IQueryable<Product>> GetProductsAsync()
@@ -26,18 +31,9 @@ namespace DemoProject.Repositories
             return (await appDBContext.Products.ToListAsync()).AsQueryable();
         }
 
-        public Product GetProduct(int id)
-        {
-            Product result = appDBContext.Products.FirstOrDefault(p => p.ProductId == id);
-            if (result.Equals(default(Product))) return null;
-            return result;
-        }
-
         public async Task<Product> GetProductAsync(int id)
         {
-            Product result = await appDBContext.Products.FirstOrDefaultAsync(p => p.ProductId == id);
-            if (result.Equals(default(Product))) return null;
-            return result;
+            return await appDBContext.Products.FirstOrDefaultAsync(p => p.ProductId == id);
         }
 
         public int DeleteProduct(int id)

@@ -22,7 +22,7 @@ namespace DemoProject.Interfaces
         /// <summary>
         /// Возвращает всех клиентов
         /// </summary>
-       IQueryable<Customer> GetCustomers();
+        IQueryable<Customer> GetCustomers();
 
         /// <summary>
         /// Возвращает всех клиентов (асинхронно)

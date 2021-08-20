@@ -17,7 +17,7 @@ namespace DemoProject.Repositories
         #region
         public IQueryable<SalesStatus> GetSalesStatuses()
         {
-            return appDBContext.SalesStatuses;
+            return appDBContext.SalesStatuses.AsQueryable(); 
         }
 
         public SalesStatus GetSalesStatus(int id)

@@ -33,7 +33,7 @@ namespace DemoProject.Repositories
 
         public IQueryable<Customer> GetCustomers()
         {
-            return appDBContext.Customers;
+            return appDBContext.Customers.AsQueryable();
         }
         #endregion 
 
